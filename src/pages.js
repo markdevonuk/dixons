@@ -14,13 +14,22 @@ const reviewCard = (r) => `<figure class="review">
   <figcaption><strong>${esc(r.name)}</strong><span>${esc(r.tag)}</span></figcaption>
 </figure>`;
 
-const reviewsBlock = (heading = 'What our customers say', alt = false) => `<section class="section reviews${alt ? ' alt' : ''}" id="reviews" aria-labelledby="reviews-h">
+// Pick reviews for a page: only the services that page is about, never one already shown on it,
+// town matches first. Returns [] rather than padding with irrelevant reviews.
+const pickReviews = ({ services, town, exclude = [], max = 3 } = {}) =>
+  reviews
+    .filter((r) => !exclude.includes(r) && (!services || r.services.some((x) => services.includes(x))))
+    .sort((a, b) => (b.town === town) - (a.town === town))
+    .slice(0, max);
+
+// Renders nothing when there are no relevant reviews, so a page never shows off-topic ones.
+const reviewsBlock = (heading = 'What our customers say', alt = false, list = pickReviews()) => list.length ? `<section class="section reviews${alt ? ' alt' : ''}" id="reviews" aria-labelledby="reviews-h">
   <div class="wrap">
     <p class="eyebrow">Reviews</p>
     <h2 id="reviews-h">${heading}</h2>
-    <div class="review-grid">${reviews.map(reviewCard).join('')}</div>
+    <div class="review-grid">${list.map(reviewCard).join('')}</div>
   </div>
-</section>`;
+</section>` : '';
 
 const ctaBand = (heading = 'Get a free, no-obligation quote', sub = 'Tell us what you need, or send us a few photos, and we will come back to you with honest advice and a clear price.') => `<section class="cta-band">
   <div class="wrap">
@@ -149,7 +158,7 @@ function home() {
   </div>
 </section>
 
-${reviewsBlock('What our customers say', true)}
+${reviewsBlock('What our customers say', true, pickReviews({ exclude: [reviews[0]] }))}
 
 <section class="section" aria-labelledby="how-h">
   <div class="wrap">
@@ -275,7 +284,7 @@ ${section('loft-conversions', 'Loft conversions', [
   'Getting the windows right early on makes a huge difference to how the finished room feels, so talk to us at the planning stage.',
 ], 'Loft conversion with several roof windows', true)}
 
-${reviewsBlock('Trusted by local VELUX customers')}
+${reviewsBlock('Trusted by local VELUX customers', false, pickReviews({ services: ['velux'] }))}
 
 <section class="section alt" aria-labelledby="also-h">
   <div class="wrap">
@@ -334,7 +343,11 @@ ${ctaBand('Get a free VELUX quote')}`;
 
 
 // ---------- Roofing & leadwork hubs ----------
-function serviceHub({ path, crumb, eyebrow, h1, lede, quoteParam, list, sections, faqs, faqTitle, otherTitle, otherText, cta, title, description, serviceName, serviceType }) {
+function serviceHub({ path, service, crumb, eyebrow, h1, lede, quoteParam, list, sections, faqs, faqTitle, otherTitle, otherText, cta, title, description, serviceName, serviceType }) {
+  // Only reviews about this service in the main block; the VELUX cross-sell box gets a
+  // different VELUX review, so nothing appears twice on the page.
+  const onTopic = pickReviews({ services: [service] });
+  const [veluxPick] = pickReviews({ services: ['velux'], exclude: onTopic, max: 1 });
   const body = `
 <section class="page-hero">
   <div class="wrap">
@@ -355,7 +368,7 @@ function serviceHub({ path, crumb, eyebrow, h1, lede, quoteParam, list, sections
 
 ${sections.map(([id, t, paras, label], i) => section(id, t, paras, label, i % 2 === 0)).join('\n')}
 
-${reviewsBlock()}
+${reviewsBlock(`What our ${crumb.toLowerCase()} customers say`, false, onTopic)}
 
 <section class="section alt" aria-labelledby="other-h">
   <div class="wrap split">
@@ -364,7 +377,7 @@ ${reviewsBlock()}
       <p>${otherText}</p>
       <p><a class="btn btn-secondary" href="/velux-windows/">VELUX roof windows</a></p>
     </div>
-    ${reviewCard(reviews[1])}
+    ${veluxPick ? reviewCard(veluxPick) : photo('New VELUX window fitted by The Dixons', '4/3')}
   </div>
 </section>
 
@@ -415,6 +428,7 @@ ${ctaBand(cta)}`;
 function roofing() {
   return serviceHub({
     path: '/roofing/',
+    service: 'roofing',
     crumb: 'Roofing',
     eyebrow: 'Pitched roofing',
     h1: 'Roofing in Newton Abbot, Torbay &amp; South Devon',
@@ -464,6 +478,7 @@ function roofing() {
 function leadwork() {
   return serviceHub({
     path: '/leadwork/',
+    service: 'leadwork',
     crumb: 'Leadwork',
     eyebrow: 'Traditional leadwork',
     h1: 'Leadwork in Newton Abbot, Torbay &amp; South Devon',
@@ -566,7 +581,7 @@ function areaPage(a) {
   </div>
 </section>
 
-${reviewsBlock()}
+${reviewsBlock('What our customers say', false, pickReviews({ town: a.slug }))}
 
 <section class="section alt">
   <div class="wrap narrow">
