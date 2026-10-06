@@ -1,19 +1,32 @@
 // Zero-dependency static build: node build.js  →  dist/
-import { mkdirSync, writeFileSync, rmSync, cpSync } from 'node:fs';
+import { mkdirSync, writeFileSync, readFileSync, rmSync, cpSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { site } from './src/site.js';
 import { allPages } from './src/pages.js';
 
 const OUT = 'dist';
+// Preview builds (e.g. GitHub Pages at /dixons/): BASE_PATH=/dixons PREVIEW=1 node build.js
+// Prefixes root-relative links with the base path and blocks search engines.
+const BASE = (process.env.BASE_PATH || '').replace(/\/$/, '');
+const PREVIEW = !!process.env.PREVIEW;
+const rebase = (html) => {
+  let out = BASE ? html.replace(/(href|src|action)="\/(?!\/)/g, `$1="${BASE}/`) : html;
+  if (PREVIEW) out = out.replace('<meta charset="utf-8">', '<meta charset="utf-8">\n<meta name="robots" content="noindex, nofollow">');
+  return out;
+};
 rmSync(OUT, { recursive: true, force: true });
 
 const pages = allPages();
 for (const [file, html] of pages) {
   const dest = join(OUT, file);
   mkdirSync(dirname(dest), { recursive: true });
-  writeFileSync(dest, html);
+  writeFileSync(dest, rebase(html));
 }
 cpSync('assets', join(OUT, 'assets'), { recursive: true });
+if (BASE) {
+  const css = join(OUT, 'assets/css/style.css');
+  writeFileSync(css, readFileSync(css, 'utf8').replaceAll('url(/assets/', `url(${BASE}/assets/`));
+}
 
 // sitemap.xml (skip 404)
 const today = new Date().toISOString().slice(0, 10);
@@ -27,7 +40,9 @@ ${urls.map((u) => `  <url><loc>${site.url}${u}</loc><lastmod>${today}</lastmod><
 </urlset>
 `);
 
-writeFileSync(join(OUT, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${site.url}/sitemap.xml\n`);
+writeFileSync(join(OUT, 'robots.txt'), PREVIEW
+  ? 'User-agent: *\nDisallow: /\n'
+  : `User-agent: *\nAllow: /\n\nSitemap: ${site.url}/sitemap.xml\n`);
 
 // Old WordPress URLs → new pages (Netlify / Cloudflare Pages format). Keeps existing rankings.
 // Add the remaining old URLs once their new pages (roofing, leadwork, about) exist.
@@ -51,5 +66,5 @@ scan(site, 'site.');
 if (site.hoursTodo) todos.push('site.hours (confirm opening hours)');
 todos.push('VELUX badge artwork (src/pages.js → badge)', 'Real job photos (every "Photo to come" block)', 'Job write-ups for Recent work');
 
-console.log(`Built ${pages.length} pages → ${OUT}/`);
+console.log(`Built ${pages.length} pages → ${OUT}/${BASE ? ` (base ${BASE})` : ''}${PREVIEW ? ' [preview, noindex]' : ''}`);
 console.log(`\nPlaceholders still to fill (${todos.length}):\n- ` + todos.join('\n- '));

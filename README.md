@@ -10,6 +10,12 @@ node check.js     # check links, anchors, JSON-LD, titles, descriptions
 npm run serve     # build and preview at http://localhost:4321
 ```
 
+## Preview on GitHub Pages
+
+Every push to `main` deploys a preview to https://markdevonuk.github.io/dixons/ via `.github/workflows/preview.yml`.
+The preview is built with `BASE_PATH=/dixons PREVIEW=1`, which prefixes links with `/dixons` and adds `noindex` plus a blocking `robots.txt`, so Google never indexes it as a duplicate of the real site.
+One-off setup: repo **Settings → Pages → Source: GitHub Actions**.
+
 ## Where things live
 
 | File | What it holds |

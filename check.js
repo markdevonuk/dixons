@@ -8,7 +8,9 @@ const walk = (d) => readdirSync(d).flatMap((f) => {
 });
 const files = walk('dist');
 const html = Object.fromEntries(files.map((f) => [f, readFileSync(f, 'utf8')]));
+const BASE = (process.env.BASE_PATH || '').replace(/\/$/, '');
 const resolve = (path) => {
+  if (BASE && path.startsWith(BASE + '/')) path = path.slice(BASE.length);
   const p = join('dist', path);
   if (path.endsWith('/')) return join(p, 'index.html');
   return existsSync(p) ? p : null;
