@@ -92,8 +92,8 @@ svg{width:1.15em;height:1.15em;fill:currentColor;flex:none}
 .crumbs a{color:var(--muted)}
 
 /* VELUX badge placeholder (swap for official artwork) */
-.velux-badge{display:inline-flex;flex-direction:column;border:2px solid var(--ink);border-radius:6px;overflow:hidden;margin-bottom:1.2rem;line-height:1}
-.vb-top{background:var(--ink);color:#fff;font:800 1.15rem/1 var(--cond);letter-spacing:.12em;padding:.4em .8em .3em}
+.velux-badge{display:inline-flex;flex-direction:column;border:2px solid var(--red);border-radius:6px;overflow:hidden;margin-bottom:1.2rem;line-height:1}
+.vb-top{background:var(--red);color:#fff;font:800 1.15rem/1 var(--cond);letter-spacing:.12em;padding:.4em .8em .3em}
 .vb-bottom{font:600 .78rem/1 var(--sans);text-transform:uppercase;letter-spacing:.1em;padding:.45em .8em;background:#fff}
 
 /* Photo placeholders */
