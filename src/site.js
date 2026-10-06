@@ -11,10 +11,10 @@ export const site = {
   companyNumber: '12502094',
   registeredIn: 'England and Wales',
 
-  // Contact — TODO: confirm with the business
-  phone: { display: '01803 000 000', tel: '+441803000000', todo: true },
-  mobile: { display: '07000 000000', tel: '+447000000000', todo: true },
-  whatsapp: { number: '447000000000', todo: true }, // international format, no +
+  // Contact
+  // One mobile number for calls and WhatsApp (confirmed Oct 2026)
+  phone: { display: '07785 766876', tel: '+447785766876' },
+  whatsapp: { number: '447785766876' }, // international format, no +
   email: { address: 'info@dixonsrl.com', todo: true },
 
   // Base (Google Business Profile should match this exactly)
