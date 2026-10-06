@@ -40,6 +40,9 @@ for (const [f, src] of Object.entries(html)) {
     if (hash && target.endsWith('.html') && !html[target]?.includes(`id="${hash}"`)) err(`${f}: missing anchor ${href}`);
   }
   for (const [, s] of src.matchAll(/src="(\/[^"]+)"/g)) if (!resolve(s.split('?')[0])) err(`${f}: missing asset ${s}`);
+  for (const [, set] of src.matchAll(/srcset="([^"]+)"/g))
+    for (const u of set.split(',').map((x) => x.trim().split(/\s+/)[0]))
+      if (!resolve(u.split('?')[0])) err(`${f}: missing srcset asset ${u}`);
 }
 console.log(errors ? `\n${errors} error(s)` : `\nAll ${files.length} pages OK`);
 process.exit(errors ? 1 : 0);

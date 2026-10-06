@@ -11,6 +11,8 @@ const BASE = (process.env.BASE_PATH || '').replace(/\/$/, '');
 const PREVIEW = !!process.env.PREVIEW;
 const rebase = (html) => {
   let out = BASE ? html.replace(/(href|src|action)="\/(?!\/)/g, `$1="${BASE}/`) : html;
+  // srcset holds several URLs: prefix each root-relative one
+  if (BASE) out = out.replace(/srcset="([^"]*)"/g, (_, v) => `srcset="${v.replace(/(^|,\s*)\/(?!\/)/g, `$1${BASE}/`)}"`);
   if (PREVIEW) out = out.replace('<meta charset="utf-8">', '<meta charset="utf-8">\n<meta name="robots" content="noindex, nofollow">');
   return out;
 };
