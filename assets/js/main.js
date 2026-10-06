@@ -17,6 +17,15 @@ const onScroll = () => {
 window.addEventListener('scroll', onScroll, { passive: true });
 onScroll();
 
+// Long reviews: expand / collapse
+document.querySelectorAll('.read-more').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const open = btn.closest('.review').classList.toggle('open');
+    btn.setAttribute('aria-expanded', String(open));
+    btn.textContent = open ? 'Show less' : 'Read full review';
+  });
+});
+
 // Quote form: prefill from ?service= / ?area= and submit via fetch
 const form = document.querySelector('.quote-form');
 if (form) {

@@ -58,26 +58,4 @@ export const areaNames = [
   'Totnes',
 ];
 
-// Real customer reviews supplied by the business (Oct 2026).
-// `services` decides which pages a review appears on: 'velux', 'roofing', 'leadwork'.
-// Optional `town` (an area slug, e.g. 'torquay') puts it first on that town's page.
-export const reviews = [
-  {
-    name: 'Harry B',
-    text: "We booked Dixon's Roofing as they are listed as an approved Velux specialist, and sure enough we received the best advice, a great price and a superb installation. Having had a Velux badly installed at a previous property, we didn't want to take the risk this time, and Mark and his team were excellent!",
-    tag: 'Velux installation',
-    services: ['velux'],
-  },
-  {
-    name: 'Chris T',
-    text: 'Mark and his team replaced two Velux windows, and sorted damaged roof tiles for us. They are highly professional, giving good advice, and always courteous and tidy on site. I would highly recommend them.',
-    tag: 'Velux replacement & roof repair',
-    services: ['velux', 'roofing'],
-  },
-  {
-    name: 'Adrian H',
-    text: 'The team at Dixons Roofing replaced some Velux windows for us. They did a fantastic job, including having to deal with a number of additional complications that arose. They kept us informed throughout, and left everything clean and tidy. Very highly recommended!',
-    tag: 'Velux replacement',
-    services: ['velux'],
-  },
-];
+// Reviews: see src/reviews.js (slots) and src/reviews-data.js (generated from Google).

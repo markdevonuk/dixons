@@ -1,5 +1,6 @@
 import { site, areaNames } from './site.js';
 import { areas } from './areas.js';
+import { reviewSummary, googleReviewsUrl } from './reviews.js';
 
 export const esc = (s = '') =>
   String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -137,6 +138,7 @@ ${noindex ? '<meta name="robots" content="noindex">' : ''}
     <a class="header-call" href="tel:${site.phone.tel}">${icon.phone}<span>${esc(site.phone.display)}</span></a>
   </div>
   <div class="trust-strip"><div class="wrap">
+    <a class="trust-rating" href="${googleReviewsUrl}" target="_blank" rel="noopener nofollow"><span class="stars" aria-hidden="true">★★★★★</span> ${reviewSummary.average.toFixed(1)} from ${reviewSummary.count} Google reviews</a>
     <span>${icon.check} VELUX Certified Installer</span>
     <span>${icon.check} Roofing &amp; leadwork specialists</span>
     <span>${icon.check} Family-run, based in Kingskerswell</span>

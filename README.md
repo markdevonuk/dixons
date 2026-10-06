@@ -20,7 +20,10 @@ One-off setup: repo **Settings → Pages → Source: GitHub Actions**.
 
 | File | What it holds |
 |---|---|
-| `src/site.js` | Business details (phone, email, address, hours), reviews. **Start here.** |
+| `src/site.js` | Business details (phone, email, address, hours). **Start here.** |
+| `src/reviews.js` | Which Google review appears in which slot on each page |
+| `src/reviews-data.js` | Generated from the Google reviews export, do not edit by hand |
+| `scripts/import-reviews.py` | Re-import reviews: `python3 scripts/import-reviews.py export.xlsx`; service and town tags live here |
 | `src/areas.js` | Copy and FAQs for the seven town pages |
 | `src/pages.js` | Page content: home, VELUX hub, areas, contact, privacy, 404 |
 | `src/layout.js` | Shared head, header, footer, structured data (schema.org) |

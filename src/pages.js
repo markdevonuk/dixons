@@ -1,4 +1,5 @@
-import { site, reviews, areaNames } from './site.js';
+import { site, areaNames } from './site.js';
+import { slots, townReviews, reviewSummary, googleReviewsUrl } from './reviews.js';
 import { areas, areaBySlug } from './areas.js';
 import { page, esc, icon, callBtn, waLink, photo, breadcrumbs, faqSchema, faqHtml, businessId } from './layout.js';
 
@@ -8,25 +9,29 @@ const badge = `<div class="velux-badge" role="img" aria-label="VELUX Certified I
 </div>`;
 // TODO: swap .velux-badge for the official badge artwork from the VELUX installer portal.
 
-const reviewCard = (r) => `<figure class="review">
-  ${icon.quote}
-  <blockquote><p>${esc(r.text)}</p></blockquote>
-  <figcaption><strong>${esc(r.name)}</strong><span>${esc(r.tag)}</span></figcaption>
+const serviceLabel = { velux: 'VELUX windows', roofing: 'Roofing', leadwork: 'Leadwork' };
+const monthYear = (ym) => new Date(ym + '-01').toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
+const stars = (n) => `<span class="stars" role="img" aria-label="${n} out of 5 stars">${'★'.repeat(n)}<span class="off">${'★'.repeat(5 - n)}</span></span>`;
+
+const reviewCard = (r) => `<figure class="review${r.text.length > 420 ? ' long' : ''}">
+  <div class="review-top">${stars(r.rating)}<span class="review-src">Google review</span></div>
+  <blockquote>${r.text.split('\n').map((p) => `<p>${esc(p)}</p>`).join('')}</blockquote>
+  ${r.text.length > 420 ? '<button class="read-more" type="button" aria-expanded="false">Read full review</button>' : ''}
+  <figcaption>
+    <strong>${esc(r.name)}</strong>
+    <span>${[r.place, ['velux', 'roofing', 'leadwork'].filter((x) => r.services.includes(x)).map((x) => serviceLabel[x]).join(', '), monthYear(r.date)].filter(Boolean).map(esc).join(' · ')}</span>
+    <a class="verify" href="${esc(r.url || googleReviewsUrl)}" target="_blank" rel="noopener nofollow">Verify this review on Google Reviews</a>
+  </figcaption>
 </figure>`;
 
-// Pick reviews for a page: only the services that page is about, never one already shown on it,
-// town matches first. Returns [] rather than padding with irrelevant reviews.
-const pickReviews = ({ services, town, exclude = [], max = 3 } = {}) =>
-  reviews
-    .filter((r) => !exclude.includes(r) && (!services || r.services.some((x) => services.includes(x))))
-    .sort((a, b) => (b.town === town) - (a.town === town))
-    .slice(0, max);
+const ratingSummary = `<p class="rating-summary"><span>${stars(5)} <strong>${reviewSummary.average.toFixed(1)} out of 5</strong> from ${reviewSummary.count} Google reviews</span><a href="${googleReviewsUrl}" target="_blank" rel="noopener nofollow">Read them all on Google</a></p>`;
 
-// Renders nothing when there are no relevant reviews, so a page never shows off-topic ones.
-const reviewsBlock = (heading = 'What our customers say', alt = false, list = pickReviews()) => list.length ? `<section class="section reviews${alt ? ' alt' : ''}" id="reviews" aria-labelledby="reviews-h">
+// Each page passes its own hand-picked list (see src/reviews.js); empty list renders nothing.
+const reviewsBlock = (heading, alt, list) => list.length ? `<section class="section reviews${alt ? ' alt' : ''}" id="reviews" aria-labelledby="reviews-h">
   <div class="wrap">
-    <p class="eyebrow">Reviews</p>
+    <p class="eyebrow">Google reviews</p>
     <h2 id="reviews-h">${heading}</h2>
+    ${ratingSummary}
     <div class="review-grid">${list.map(reviewCard).join('')}</div>
   </div>
 </section>` : '';
@@ -154,11 +159,11 @@ function home() {
         <li>${icon.check} Genuine VELUX products with the manufacturer’s guarantee</li>
       </ul>
     </div>
-    ${reviewCard(reviews[0])}
+    ${reviewCard(slots.homeFeatured)}
   </div>
 </section>
 
-${reviewsBlock('What our customers say', true, pickReviews({ exclude: [reviews[0]] }))}
+${reviewsBlock('What our customers say', true, slots.home)}
 
 <section class="section" aria-labelledby="how-h">
   <div class="wrap">
@@ -284,7 +289,7 @@ ${section('loft-conversions', 'Loft conversions', [
   'Getting the windows right early on makes a huge difference to how the finished room feels, so talk to us at the planning stage.',
 ], 'Loft conversion with several roof windows', true)}
 
-${reviewsBlock('Trusted by local VELUX customers', false, pickReviews({ services: ['velux'] }))}
+${reviewsBlock('Trusted by local VELUX customers', false, slots.velux)}
 
 <section class="section alt" aria-labelledby="also-h">
   <div class="wrap">
@@ -346,8 +351,8 @@ ${ctaBand('Get a free VELUX quote')}`;
 function serviceHub({ path, service, crumb, eyebrow, h1, lede, quoteParam, list, sections, faqs, faqTitle, otherTitle, otherText, cta, title, description, serviceName, serviceType }) {
   // Only reviews about this service in the main block; the VELUX cross-sell box gets a
   // different VELUX review, so nothing appears twice on the page.
-  const onTopic = pickReviews({ services: [service] });
-  const [veluxPick] = pickReviews({ services: ['velux'], exclude: onTopic, max: 1 });
+  const onTopic = slots[service];
+  const veluxPick = slots[service + 'Velux'];
   const body = `
 <section class="page-hero">
   <div class="wrap">
@@ -581,7 +586,7 @@ function areaPage(a) {
   </div>
 </section>
 
-${reviewsBlock('What our customers say', false, pickReviews({ town: a.slug }))}
+${reviewsBlock(`Reviews for our VELUX, roofing and leadwork work`, false, townReviews(a.slug, areas.indexOf(a)))}
 
 <section class="section alt">
   <div class="wrap narrow">
