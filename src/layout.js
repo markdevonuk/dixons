@@ -86,7 +86,7 @@ export const faqHtml = (faqs) =>
     .join('')}</div>`;
 
 // ---------- Page shell ----------
-export function page({ path, title, description, body, schema = [], ogImage = '/assets/img/icon-512.png', noindex = false }) {
+export function page({ path, title, description, body, schema = [], ogImage = '/assets/img/og.png', noindex = false }) {
   const graph = { '@context': 'https://schema.org', '@graph': [businessSchema(), ...schema] };
   const current = (href) => (path === href ? ' aria-current="page"' : '');
   const year = new Date().getFullYear();
@@ -108,9 +108,12 @@ ${noindex ? '<meta name="robots" content="noindex">' : ''}
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:url" content="${abs(path)}">
 <meta property="og:image" content="${abs(ogImage)}">
-<meta name="twitter:card" content="summary">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#1D1D1B">
 <link rel="icon" href="/assets/img/favicon.ico" sizes="any">
+<link rel="icon" href="/assets/img/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
 <link rel="preload" href="/assets/fonts/source-serif-4-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/barlow-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
@@ -122,8 +125,8 @@ ${noindex ? '<meta name="robots" content="noindex">' : ''}
 <header class="site-header">
   <div class="wrap header-inner">
     <a class="brand" href="/" aria-label="The Dixons Roofing and Leadwork, home">
-      <img src="/assets/img/logo-120.webp" width="60" height="60" alt="">
-      <span class="brand-text"><strong>The Dixons</strong><small>Roofing &amp; Leadwork</small></span>
+      <img src="/assets/img/icon.svg" width="52" height="52" alt="">
+      <span class="brand-text"><strong>The Dixons</strong><small>VELUX · Roofing · Leadwork</small></span>
     </a>
     <nav class="site-nav" aria-label="Main">
       <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list">Menu</button>
@@ -145,7 +148,7 @@ ${body}
 <footer class="site-footer">
   <div class="wrap footer-grid">
     <div>
-      <img src="/assets/img/logo-240.webp" width="96" height="96" alt="The Dixons Roofing and Leadwork logo" loading="lazy">
+      <img src="/assets/img/logo.svg" width="120" height="120" alt="The Dixons: VELUX, roofing and leadwork" loading="lazy">
       <p>VELUX Certified Installers and roofers serving Newton Abbot, Torbay and the South Hams from our base in Kingskerswell.</p>
     </div>
     <div>

@@ -73,6 +73,7 @@ svg{width:1.15em;height:1.15em;fill:currentColor;flex:none}
   .header-inner{min-height:64px;gap:8px}
   .brand img{width:44px;height:44px}
   .brand-text strong{font-size:1.25rem}
+  .brand-text small{font-size:.66rem;letter-spacing:.06em;white-space:nowrap}
   .header-call span{display:none}
   .header-call{padding:.6em}
   .nav-toggle{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border:1px solid var(--line);background:#fff;border-radius:8px;font:600 .95rem var(--sans);color:var(--ink);cursor:pointer}
@@ -188,7 +189,7 @@ svg{width:1.15em;height:1.15em;fill:currentColor;flex:none}
 .site-footer a{color:#fff}
 .site-footer h2{font:800 1rem/1 var(--cond);text-transform:uppercase;letter-spacing:.12em;color:#fff;margin-bottom:1em}
 .footer-grid{display:grid;gap:32px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
-.footer-grid img{width:96px;height:96px;margin-bottom:12px}
+.footer-grid img{width:120px;height:120px;margin-bottom:12px}
 .plain{list-style:none;padding:0;margin:0}
 .plain li{margin-bottom:.5em}
 .cols{columns:2;column-gap:16px}
