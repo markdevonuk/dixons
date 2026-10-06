@@ -39,7 +39,7 @@ for (const [f, src] of Object.entries(html)) {
     if (!target || !existsSync(target)) { err(`${f}: broken link ${href}`); continue; }
     if (hash && target.endsWith('.html') && !html[target]?.includes(`id="${hash}"`)) err(`${f}: missing anchor ${href}`);
   }
-  for (const [, s] of src.matchAll(/src="(\/[^"]+)"/g)) if (!resolve(s)) err(`${f}: missing asset ${s}`);
+  for (const [, s] of src.matchAll(/src="(\/[^"]+)"/g)) if (!resolve(s.split('?')[0])) err(`${f}: missing asset ${s}`);
 }
 console.log(errors ? `\n${errors} error(s)` : `\nAll ${files.length} pages OK`);
 process.exit(errors ? 1 : 0);

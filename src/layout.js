@@ -1,3 +1,5 @@
+import { createHash } from 'node:crypto';
+import { readFileSync } from 'node:fs';
 import { site, areaNames } from './site.js';
 import { areas } from './areas.js';
 import { reviewSummary, googleReviewsUrl } from './reviews.js';
@@ -6,6 +8,12 @@ export const esc = (s = '') =>
   String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 const abs = (path) => site.url + path;
+
+// Short hash of the CSS + JS, so a changed file gets a new URL and browsers don't use a stale copy
+const assetVersion = createHash('sha1')
+  .update(readFileSync('assets/css/style.css'))
+  .update(readFileSync('assets/js/main.js'))
+  .digest('hex').slice(0, 8);
 
 const icon = {
   phone: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.5 15.5 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>',
@@ -119,7 +127,7 @@ ${noindex ? '<meta name="robots" content="noindex">' : ''}
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
 <link rel="preload" href="/assets/fonts/source-serif-4-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/barlow-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/css/style.css">
+<link rel="stylesheet" href="/assets/css/style.css?v=${assetVersion}">
 <script type="application/ld+json">${JSON.stringify(graph)}</script>
 </head>
 <body>
@@ -192,7 +200,7 @@ ${body}
   <a href="${waLink()}" rel="noopener">${icon.whatsapp}<span>Send photos</span></a>
   <a class="primary" href="tel:${site.phone.tel}">${icon.phone}<span>Call now</span></a>
 </div>
-<script src="/assets/js/main.js" defer></script>
+<script src="/assets/js/main.js?v=${assetVersion}" defer></script>
 </body>
 </html>
 `;

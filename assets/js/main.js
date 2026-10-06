@@ -17,12 +17,15 @@ const onScroll = () => {
 window.addEventListener('scroll', onScroll, { passive: true });
 onScroll();
 
-// Long reviews: expand / collapse
-document.querySelectorAll('.read-more').forEach((btn) => {
+// Long reviews: "… more" swaps the excerpt for the full text
+document.querySelectorAll('.review .more').forEach((btn) => {
   btn.addEventListener('click', () => {
-    const open = btn.closest('.review').classList.toggle('open');
-    btn.setAttribute('aria-expanded', String(open));
-    btn.textContent = open ? 'Show less' : 'Read full review';
+    const card = btn.closest('.review');
+    card.querySelector('.review-excerpt').hidden = true;
+    const full = card.querySelector('.review-full');
+    full.hidden = false;
+    full.setAttribute('tabindex', '-1');
+    full.focus({ preventScroll: true });
   });
 });
 

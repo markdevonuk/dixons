@@ -13,18 +13,34 @@ const serviceLabel = { velux: 'VELUX windows', roofing: 'Roofing', leadwork: 'Le
 const monthYear = (ym) => new Date(ym + '-01').toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
 const stars = (n) => `<span class="stars" role="img" aria-label="${n} out of 5 stars">${'★'.repeat(n)}<span class="off">${'★'.repeat(5 - n)}</span></span>`;
 
-const reviewCard = (r) => `<figure class="review${r.text.length > 420 ? ' long' : ''}">
-  <div class="review-top">${stars(r.rating)}<span class="review-src">Google review</span></div>
-  <blockquote>${r.text.split('\n').map((p) => `<p>${esc(p)}</p>`).join('')}</blockquote>
-  ${r.text.length > 420 ? '<button class="read-more" type="button" aria-expanded="false">Read full review</button>' : ''}
+// Long reviews show an excerpt ending "… more". Only cut when a real chunk (80+ characters)
+// would be hidden, so "more" never opens onto a few extra words.
+const EXCERPT = 280;
+const excerptOf = (text) => {
+  const flat = text.replace(/\n/g, ' ');
+  if (flat.length < EXCERPT + 80) return null;
+  return flat.slice(0, flat.lastIndexOf(' ', EXCERPT)).replace(/[\s,;:.\-–]+$/, '');
+};
+const paras = (text) => text.split('\n').map((p) => `<p>${esc(p)}</p>`).join('');
+
+const reviewCard = (r) => {
+  const ex = excerptOf(r.text);
+  const body = ex
+    ? `<blockquote class="review-excerpt"><p>${esc(ex)}… <button class="more" type="button" aria-expanded="false">more</button></p></blockquote>
+  <blockquote class="review-full" hidden>${paras(r.text)}</blockquote>`
+    : `<blockquote>${paras(r.text)}</blockquote>`;
+  return `<figure class="review">
+  <div class="review-top">${stars(r.rating)} <span class="review-src">Google review</span></div>
+  ${body}
   <figcaption>
     <strong>${esc(r.name)}</strong>
     <span>${[r.place, ['velux', 'roofing', 'leadwork'].filter((x) => r.services.includes(x)).map((x) => serviceLabel[x]).join(', '), monthYear(r.date)].filter(Boolean).map(esc).join(' · ')}</span>
     <a class="verify" href="${esc(r.url || googleReviewsUrl)}" target="_blank" rel="noopener nofollow">Verify this review on Google Reviews</a>
   </figcaption>
 </figure>`;
+};
 
-const ratingSummary = `<p class="rating-summary"><span>${stars(5)} <strong>${reviewSummary.average.toFixed(1)} out of 5</strong> from ${reviewSummary.count} Google reviews</span><a href="${googleReviewsUrl}" target="_blank" rel="noopener nofollow">Read them all on Google</a></p>`;
+const ratingSummary = `<p class="rating-summary"><span>${stars(5)} <strong>${reviewSummary.average.toFixed(1)} out of 5</strong> from ${reviewSummary.count} Google reviews</span> <a href="${googleReviewsUrl}" target="_blank" rel="noopener nofollow">Read them all on Google</a></p>`;
 
 // Each page passes its own hand-picked list (see src/reviews.js); empty list renders nothing.
 const reviewsBlock = (heading, alt, list) => list.length ? `<section class="section reviews${alt ? ' alt' : ''}" id="reviews" aria-labelledby="reviews-h">

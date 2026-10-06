@@ -136,8 +136,9 @@ svg{width:1.15em;height:1.15em;fill:currentColor;flex:none}
 .stars .off{color:var(--line)}
 .review blockquote{margin:.8rem 0 1rem;font-family:var(--serif);font-size:1.05rem;line-height:1.55}
 .review blockquote p{margin:0 0 .6em}
-.review.long:not(.open) blockquote{display:-webkit-box;-webkit-line-clamp:8;-webkit-box-orient:vertical;overflow:hidden}
-.read-more{align-self:flex-start;background:none;border:0;padding:0;margin:-.4rem 0 1rem;font:600 .95rem var(--sans);color:var(--red-dark);cursor:pointer;text-decoration:underline}
+.review .more{background:none;border:0;padding:0;font:600 .9em var(--sans);color:var(--red-dark);cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+.review .more:hover{color:var(--ink)}
+.review .more::after{content:none}
 .review figcaption{margin-top:auto;display:flex;flex-direction:column;gap:2px}
 .review figcaption span{font-size:.88rem;color:var(--muted)}
 .review .verify{font-size:.85rem;margin-top:.5em;color:var(--slate-2)}
