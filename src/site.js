@@ -15,7 +15,7 @@ export const site = {
   // One mobile number for calls and WhatsApp (confirmed Oct 2026)
   phone: { display: '07785 766876', tel: '+447785766876' },
   whatsapp: { number: '447785766876' }, // international format, no +
-  email: { address: 'info@dixonsrl.com', todo: true },
+  email: { address: 'info@dixonsrl.com' },
 
   // Base (Google Business Profile should match this exactly)
   address: {
@@ -25,16 +25,14 @@ export const site = {
     region: 'Devon',
     postcode: 'TQ12 5HF',
     country: 'GB',
-    todo: true, // confirm this is the address they want public (registered office)
-  },
+  }, // confirmed as the public address (Oct 2026)
   geo: { lat: 50.4936, lng: -3.5786 }, // Kingskerswell village centre (approx.)
 
   hours: [
-    { days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '08:00', closes: '17:00' },
-  ],
-  hoursTodo: true,
+    { days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '08:00', closes: '16:30' },
+  ], // Saturday and Sunday closed (confirmed Oct 2026)
 
-  since: null, // TODO: confirm founding year (old site says both 1980 and "over 30 years")
+  since: 1980, // founding year (confirmed Oct 2026)
 
   social: {
     facebook: null, // TODO
@@ -50,8 +48,11 @@ export const site = {
       id: 'velux',
       name: 'VELUX Certified Installer',
       short: 'VELUX Certified',
-      detail: 'Approved by VELUX to install their roof windows',
-      url: null, // = veluxListingUrl once known
+      detail: 'Approved by VELUX and listed on their installer finder',
+      // VELUX has no direct profile link, so this goes to the finder and customers search by postcode
+      url: 'https://velux.co.uk/get-started/find-installer',
+      checkText: 'Search VELUX’s installer finder',
+      profile: false, // not a page about the business, so kept out of schema sameAs
     },
     {
       id: 'trustmark',
@@ -69,8 +70,7 @@ export const site = {
     },
   ],
 
-  // Links to verify the accreditation — TODO: paste their VELUX installer-finder listing URL
-  veluxListingUrl: null,
+  // VELUX has no public listing link for them, so the VELUX badge is shown without one.
 
   formEndpoint: null, // TODO: Formspree / Netlify / Cloudflare form endpoint once hosting chosen
 };

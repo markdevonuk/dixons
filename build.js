@@ -69,7 +69,6 @@ const scan = (obj, path) => {
   }
 };
 scan(site, 'site.');
-if (site.hoursTodo) todos.push('site.hours (confirm opening hours)');
 todos.push('VELUX badge artwork (src/pages.js → badge)', 'Real job photos (every "Photo to come" block)', 'Job write-ups for Recent work');
 
 console.log(`Built ${pages.length} pages → ${OUT}/${BASE ? ` (base ${BASE})` : ''}${PREVIEW ? ' [preview, noindex]' : ''}`);

@@ -1,7 +1,7 @@
 import { site, areaNames } from './site.js';
 import { slots, townReviews, reviewSummary, googleReviewsUrl } from './reviews.js';
 import { areas, areaBySlug } from './areas.js';
-import { page, accreditationBadges, esc, icon, callBtn, waLink, photo, breadcrumbs, faqSchema, faqHtml, businessId } from './layout.js';
+import { page, accreditationBadges, hoursText, esc, icon, callBtn, waLink, photo, breadcrumbs, faqSchema, faqHtml, businessId } from './layout.js';
 
 // ---------- Shared blocks ----------
 const badge = `<div class="velux-badge" role="img" aria-label="VELUX Certified Installer">
@@ -120,7 +120,7 @@ const areaLinks = `<ul class="area-list">${areas
 // ---------- Home ----------
 function home() {
   const faqs = [
-    ['What is a VELUX Certified Installer?', 'It means we have been approved by VELUX to install their products. Certified installers are listed on the VELUX website, so you can check us before you book. We are also TrustMark registered for VELUX installations and repairs.'],
+    ['What is a VELUX Certified Installer?', 'It means VELUX have approved us to install their roof windows, blinds and accessories. You can find us by searching your postcode on the VELUX installer finder. We are also TrustMark registered for VELUX installations and repairs, which you can check on the TrustMark website.'],
     ['Are you accredited?', 'Yes. We are VELUX Certified Installers, TrustMark registered for VELUX installations and repairs, and members of the CERTASS trade association. Each one has a public listing you can check, linked at the bottom of every page.'],
     ['Which areas do you cover?', `We are based in Kingskerswell and work across ${areaNames.slice(1, -1).join(', ')} and ${areaNames.at(-1)}, plus the surrounding villages.`],
     ['Do you only do VELUX windows?', 'No. VELUX roof windows are a big part of what we do, but we are roofers and leadworkers by trade. We take on re-roofs, roof repairs, chimney work and all kinds of leadwork.'],
@@ -133,7 +133,7 @@ function home() {
     <div class="hero-copy">
       ${badge}
       <h1>VELUX roof windows, fitted properly, across Newton Abbot and Torbay</h1>
-      <p class="lede">We are a family-run team of VELUX Certified Installers, roofers and leadworkers based in Kingskerswell. Roof windows, re-roofs, repairs and leadwork, with honest advice and a fixed price.</p>
+      <p class="lede">We are a family-run team of VELUX Certified Installers, roofers and leadworkers, based in Kingskerswell since ${site.since}. Roof windows, re-roofs, repairs and leadwork, with honest advice and a fixed price.</p>
       <div class="btn-row">
         ${callBtn()}
         <a class="btn btn-secondary" href="/contact/">Get a free quote</a>
@@ -225,8 +225,8 @@ ${reviewsBlock('What our customers say', true, slots.home)}
     ${photo('The Dixons family team', '4/3')}
     <div>
       <p class="eyebrow">About us</p>
-      <h2 id="about-h">A family business, not a call centre</h2>
-      <p>The Dixons is a family-run roofing and leadwork business based in Kingskerswell. When you call, you speak to the people who will do the job. We give straight advice, turn up when we say we will, and leave your home clean and tidy.</p>
+      <h2 id="about-h">A family business since ${site.since}</h2>
+      <p>The Dixons has been a family-run roofing and leadwork business in Kingskerswell since ${site.since}. We are a family business, not a call centre: when you call, you speak to the people who will do the job. We give straight advice, turn up when we say we will, and leave your home clean and tidy.</p>
       <p>We are roofers and leadworkers by trade and VELUX Certified Installers too, so whether it is a new roof window, a leaking chimney or a full re-roof, the same experienced team does the work.</p>
     </div>
   </div>
@@ -731,6 +731,8 @@ function contact() {
       <p><a href="mailto:${site.email.address}">${esc(site.email.address)}</a></p>
       <h2 class="h3">Accredited</h2>
       ${accreditationBadges('compact')}
+      <h2 class="h3">Opening hours</h2>
+      <p>${esc(hoursText)}. Closed Saturday and Sunday.</p>
       <h2 class="h3">Where we are</h2>
       <p>Based in ${esc(site.address.locality)}, ${esc(site.address.town)}. Covering ${areaNames.slice(1).join(', ')}.</p>
     </aside>

@@ -30,11 +30,15 @@ export const callBtn = (cls = 'btn btn-primary') =>
 export const waLink = (text = "Hi, I'd like a quote. Here are some photos of the job:") =>
   `https://wa.me/${site.whatsapp.number}?text=${encodeURIComponent(text)}`;
 
+// Opening hours as text, e.g. "Monday to Friday, 8am to 4:30pm"
+const t12 = (hm) => { const [h, m] = hm.split(':').map(Number); return `${h % 12 || 12}${m ? ':' + String(m).padStart(2, '0') : ''}${h < 12 ? 'am' : 'pm'}`; };
+export const hoursText = site.hours.map((h) => `${h.days[0]} to ${h.days.at(-1)}, ${t12(h.opens)} to ${t12(h.closes)}`).join('; ');
+
 // Accreditation badges. Each links to its public listing where one exists, so customers can check it.
-const accUrl = (a) => a.url || (a.id === 'velux' ? site.veluxListingUrl : null);
+const accUrl = (a) => a.url || null;
 export const accreditationBadges = (cls = '') => `<ul class="acc-badges ${cls}">${site.accreditations
   .map((a) => {
-    const inner = `<span class="acc-mark acc-${a.id}">${esc(a.short)}</span><span class="acc-text"><strong>${esc(a.name)}</strong><small>${esc(a.detail)}</small>${accUrl(a) ? '<span class="acc-check">Check our listing</span>' : ''}</span>`;
+    const inner = `<span class="acc-mark acc-${a.id}">${esc(a.short)}</span><span class="acc-text"><strong>${esc(a.name)}</strong><small>${esc(a.detail)}</small>${accUrl(a) ? `<span class="acc-check">${esc(a.checkText || 'Check our listing')}</span>` : ''}</span>`;
     return `<li>${accUrl(a) ? `<a href="${esc(accUrl(a))}" target="_blank" rel="noopener">${inner}</a>` : `<div>${inner}</div>`}</li>`;
   }).join('')}</ul>`;
 
@@ -74,6 +78,7 @@ export function businessSchema() {
     },
     geo: { '@type': 'GeoCoordinates', latitude: site.geo.lat, longitude: site.geo.lng },
     areaServed: areaNames.map((n) => ({ '@type': 'City', name: n })),
+    foundingDate: String(site.since),
     openingHoursSpecification: site.hours.map((h) => ({
       '@type': 'OpeningHoursSpecification', dayOfWeek: h.days, opens: h.opens, closes: h.closes,
     })),
@@ -84,7 +89,7 @@ export function businessSchema() {
       ...(accUrl(a) ? { url: accUrl(a) } : {}),
     })),
     identifier: { '@type': 'PropertyValue', propertyID: 'Companies House', value: site.companyNumber },
-    sameAs: [site.social.facebook, site.social.instagram, ...site.accreditations.map(accUrl)].filter(Boolean),
+    sameAs: [site.social.facebook, site.social.instagram, ...site.accreditations.filter((a) => a.profile !== false).map(accUrl)].filter(Boolean),
   };
 }
 
@@ -162,7 +167,7 @@ ${noindex ? '<meta name="robots" content="noindex">' : ''}
     <span>${icon.check} VELUX Certified Installer</span>
     <span>${icon.check} TrustMark registered for VELUX</span>
     <span>${icon.check} Roofing &amp; leadwork specialists</span>
-    <span>${icon.check} Family-run in Kingskerswell</span>
+    <span>${icon.check} Family-run since ${site.since}</span>
   </div></div>
 </header>
 <main id="main">
@@ -172,7 +177,7 @@ ${body}
   <div class="wrap footer-grid">
     <div>
       <img src="/assets/img/logo.svg" width="120" height="120" alt="The Dixons: VELUX, roofing and leadwork" loading="lazy">
-      <p>VELUX Certified Installers, roofers and leadworkers serving Newton Abbot, Torbay and the South Hams from our base in Kingskerswell.</p>
+      <p>A family business since ${site.since}. VELUX Certified Installers, roofers and leadworkers serving Newton Abbot, Torbay and the South Hams from our base in Kingskerswell.</p>
     </div>
     <div>
       <h2>Contact</h2>
@@ -182,6 +187,7 @@ ${body}
         <li><a href="${waLink()}" rel="noopener">WhatsApp us photos</a></li>
       </ul>
       <p class="small">${esc(a.locality)}, ${esc(a.town)}, ${esc(a.region)} ${esc(a.postcode)}</p>
+      <p class="small">${esc(hoursText)}. Closed weekends.</p>
     </div>
     <div>
       <h2>Areas we cover</h2>
