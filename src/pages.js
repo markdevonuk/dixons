@@ -144,7 +144,8 @@ function home() {
       <img src="/assets/img/photos/team-velux-roof-960.webp"
         srcset="/assets/img/photos/team-velux-roof-640.webp 640w, /assets/img/photos/team-velux-roof-960.webp 960w"
         sizes="(min-width: 900px) 46vw, 100vw" width="960" height="720" fetchpriority="high"
-        alt="Two of the Dixons team on a slate roof beside a newly fitted VELUX roof window">
+        alt="Mark and Sam Dixon on a slate roof beside a newly fitted VELUX roof window">
+      <figcaption>Mark and Sam Dixon fitting a VELUX roof window</figcaption>
     </figure>
   </div>
 </section>
