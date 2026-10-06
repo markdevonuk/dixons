@@ -45,13 +45,17 @@ writeFileSync(join(OUT, 'robots.txt'), PREVIEW
   : `User-agent: *\nAllow: /\n\nSitemap: ${site.url}/sitemap.xml\n`);
 
 // Old WordPress URLs → new pages (Netlify / Cloudflare Pages format). Keeps existing rankings.
-// Add the remaining old URLs once their new pages (roofing, leadwork, about) exist.
-writeFileSync(join(OUT, '_redirects'), `/velux-windows                  /velux-windows/            301
-/tips-for-choosing-velux-windows /velux-windows/            301
-/balcony-windows                /velux-windows/#installation 301
-/contact                        /contact/                  301
-/dixonsrl.com/contact           /contact/                  301
-/portfolio/kingsteignton        /areas/kingsteignton/      301
+// Old URLs that only differ by a trailing slash (/velux-windows, /leadwork, /contact) are left to the host,
+// which adds the slash itself; listing them here can cause redirect loops on some hosts.
+writeFileSync(join(OUT, '_redirects'), `/tips-for-choosing-velux-windows /velux-windows/              301
+/balcony-windows                 /velux-windows/#installation 301
+/pitched-roofing                 /roofing/                    301
+/services                        /                            301
+/roofing-about                   /                            301
+/projects                        /                            301
+/interior-decoration             /                            301
+/dixonsrl.com/contact            /contact/                    301
+/portfolio/kingsteignton         /areas/kingsteignton/        301
 `);
 
 // Placeholder report

@@ -14,7 +14,7 @@ const reviewCard = (r) => `<figure class="review">
   <figcaption><strong>${esc(r.name)}</strong><span>${esc(r.tag)}</span></figcaption>
 </figure>`;
 
-const reviewsBlock = (heading = 'What our customers say') => `<section class="section reviews" id="reviews" aria-labelledby="reviews-h">
+const reviewsBlock = (heading = 'What our customers say', alt = false) => `<section class="section reviews${alt ? ' alt' : ''}" id="reviews" aria-labelledby="reviews-h">
   <div class="wrap">
     <p class="eyebrow">Reviews</p>
     <h2 id="reviews-h">${heading}</h2>
@@ -22,7 +22,7 @@ const reviewsBlock = (heading = 'What our customers say') => `<section class="se
   </div>
 </section>`;
 
-const ctaBand = (heading = 'Get a free VELUX quote', sub = 'Tell us what you need, or send us a few photos, and we will come back to you with honest advice and a clear price.') => `<section class="cta-band">
+const ctaBand = (heading = 'Get a free, no-obligation quote', sub = 'Tell us what you need, or send us a few photos, and we will come back to you with honest advice and a clear price.') => `<section class="cta-band">
   <div class="wrap">
     <h2>${heading}</h2>
     <p>${sub}</p>
@@ -35,9 +35,9 @@ const ctaBand = (heading = 'Get a free VELUX quote', sub = 'Tell us what you nee
 </section>`;
 
 const steps = `<ol class="steps">
-  <li><h3>Tell us about the job</h3><p>Call, fill in the form, or WhatsApp us a few photos of the window or roof.</p></li>
-  <li><h3>Free survey and fixed quote</h3><p>We visit, measure up, check the roof around the window and give you a clear written price.</p></li>
-  <li><h3>Fitted properly, left tidy</h3><p>We fit genuine VELUX products with the correct flashings, clean up and explain how everything works.</p></li>
+  <li><h3>Tell us about the job</h3><p>Call, fill in the form, or WhatsApp us a few photos of the window, roof or leak.</p></li>
+  <li><h3>Free survey and fixed quote</h3><p>We visit, look at the roof properly, explain what we find and give you a clear written price.</p></li>
+  <li><h3>Done properly, left tidy</h3><p>We use the right materials and details for your roof, clean up after ourselves and talk you through the finished job.</p></li>
 </ol>`;
 
 const veluxServices = [
@@ -47,11 +47,42 @@ const veluxServices = [
   { id: 'repairs', title: 'Repairs & flashings', text: 'Leaks, broken hinges, failed seals and storm damage. As roofers and leadworkers we fix the roof around the window too.' },
 ];
 
-const serviceCards = (linkBase = '/velux-windows/') => `<div class="card-grid">${veluxServices
-  .map((s) => `<a class="card" href="${linkBase}#${s.id}">
+const roofingServices = [
+  { id: 're-roofing', title: 'Re-roofing', text: 'Complete re-roofs in natural slate and tile, stripped back to the rafters with new membrane, battens and fixings.' },
+  { id: 'repairs', title: 'Roof repairs', text: 'Slipped and broken slates or tiles, leaks and storm damage, found and fixed properly rather than patched.' },
+  { id: 'ridges', title: 'Ridges & hips', text: 'Loose or cracked ridge and hip tiles re-bedded, repointed or upgraded to a modern dry-fix system.' },
+  { id: 'chimneys', title: 'Chimney repairs', text: 'Repointing, flaunching, cowls and new lead flashings to stop chimney leaks for good.' },
+];
+
+const leadServices = [
+  { id: 'flashings', title: 'Lead flashings', text: 'Step, cover and apron flashings where roofs meet walls, dormers and extensions, cut and dressed by hand.' },
+  { id: 'chimney-leadwork', title: 'Chimney leadwork', text: 'Back gutters, aprons and soakers around chimney stacks, the most common source of roof leaks we see.' },
+  { id: 'valleys', title: 'Valleys & gutters', text: 'Lead valleys and parapet or box gutters relined, so water runs off the roof instead of into the house.' },
+  { id: 'bays', title: 'Bay & porch roofs', text: 'Traditional lead roofs on bay windows, porches, canopies and dormers, laid with proper rolls and joints.' },
+];
+
+const cards = (list, linkBase) => `<div class="card-grid">${list
+  .map((s) => `<a class="card" href="${s.href || `${linkBase}#${s.id}`}">
     ${photo(s.title, '3/2')}
     <div class="card-body"><h3>${s.title}</h3><p>${s.text}</p><span class="more">Find out more</span></div>
   </a>`).join('')}</div>`;
+
+const serviceCards = (linkBase = '/velux-windows/') => cards(veluxServices, linkBase);
+
+// Two big cards pointing at the roofing and leadwork hubs
+const roofLeadCards = `<div class="card-grid two">
+  <a class="card" href="/roofing/">${photo('Re-roofing a slate roof', '3/2')}
+    <div class="card-body"><h3>Roofing</h3><p>Re-roofs, roof repairs, ridges and chimneys in natural slate and tile. Leaks found and fixed properly.</p><span class="more">Roofing services</span></div></a>
+  <a class="card" href="/leadwork/">${photo('Hand-dressed lead flashing', '3/2')}
+    <div class="card-body"><h3>Leadwork</h3><p>Flashings, chimney leadwork, valleys and traditional lead bay and porch roofs, cut and dressed by hand.</p><span class="more">Leadwork services</span></div></a>
+</div>`;
+
+const section = (id, title, paras, label, flip = false) => `<section class="section ${flip ? 'alt' : ''}" id="${id}" aria-labelledby="${id}-h">
+  <div class="wrap split ${flip ? 'flip' : ''}">
+    <div><h2 id="${id}-h">${title}</h2>${paras.map((p) => `<p>${p}</p>`).join('')}</div>
+    ${photo(label, '4/3')}
+  </div>
+</section>`;
 
 const areaLinks = `<ul class="area-list">${areas
   .map((a) => `<li><a href="/areas/${a.slug}/">${icon.pin}<span>${esc(a.name)}</span></a></li>`).join('')}</ul>`;
@@ -61,7 +92,8 @@ function home() {
   const faqs = [
     ['What is a VELUX Certified Installer?', 'It means we have been approved by VELUX to install their products. Certified installers are listed on the VELUX website, so you can check us before you book.'],
     ['Which areas do you cover?', `We are based in Kingskerswell and work across ${areaNames.slice(1, -1).join(', ')} and ${areaNames.at(-1)}, plus the surrounding villages.`],
-    ['Do you only do VELUX windows?', 'No. VELUX roof windows are our speciality, but we are roofers and leadworkers too, so we also take on roof repairs, leadwork and general roofing.'],
+    ['Do you only do VELUX windows?', 'No. VELUX roof windows are a big part of what we do, but we are roofers and leadworkers by trade. We take on re-roofs, roof repairs, chimney work and all kinds of leadwork.'],
+    ['Can you fix a leaking roof?', 'Yes. Most leaks come from slipped slates or tiles, failed flashings, chimneys or valleys. We find the actual cause and fix it properly, rather than covering it up.'],
     ['How much does a VELUX window cost?', 'It depends on the size, the type of window, your roof covering and access. We give free, fixed written quotes, so you know the full price before we start.'],
   ];
   const body = `
@@ -70,7 +102,7 @@ function home() {
     <div class="hero-copy">
       ${badge}
       <h1>VELUX roof windows, fitted properly, across Newton Abbot and Torbay</h1>
-      <p class="lede">We are a family-run team of VELUX Certified Installers and roofers based in Kingskerswell. New windows, replacements, blinds and repairs, with honest advice and a fixed price.</p>
+      <p class="lede">We are a family-run team of VELUX Certified Installers, roofers and leadworkers based in Kingskerswell. Roof windows, re-roofs, repairs and leadwork, with honest advice and a fixed price.</p>
       <div class="btn-row">
         ${callBtn()}
         <a class="btn btn-secondary" href="/contact/">Get a free quote</a>
@@ -91,7 +123,16 @@ function home() {
   </div>
 </section>
 
-<section class="section alt" aria-labelledby="why-h">
+<section class="section alt" aria-labelledby="roof-h">
+  <div class="wrap">
+    <p class="eyebrow">Roofing &amp; leadwork</p>
+    <h2 id="roof-h">Roofers and leadworkers, not just window fitters</h2>
+    <p class="section-lede">Roofing and leadwork is our trade. From a single slipped slate to a complete re-roof, and from chimney flashings to traditional lead bay roofs, we do it all ourselves.</p>
+    ${roofLeadCards}
+  </div>
+</section>
+
+<section class="section" aria-labelledby="why-h">
   <div class="wrap split">
     <div>
       <p class="eyebrow">Why a certified installer?</p>
@@ -108,7 +149,7 @@ function home() {
   </div>
 </section>
 
-${reviewsBlock()}
+${reviewsBlock('What our customers say', true)}
 
 <section class="section" aria-labelledby="how-h">
   <div class="wrap">
@@ -121,9 +162,9 @@ ${reviewsBlock()}
 <section class="section alt" aria-labelledby="work-h">
   <div class="wrap">
     <p class="eyebrow">Recent work</p>
-    <h2 id="work-h">Recent VELUX jobs</h2>
+    <h2 id="work-h">Recent jobs</h2>
     <div class="work-grid">
-      ${['VELUX replacement, Newton Abbot', 'Loft conversion windows, Paignton', 'Conservation roof window, Totnes']
+      ${['VELUX replacement, Newton Abbot', 'Slate re-roof, Torquay', 'Chimney leadwork, Brixham']
         .map((t) => `<article class="work">${photo(t, '4/3')}<h3>${t}</h3><p class="todo-note">Job write-up to come.</p></article>`).join('')}
     </div>
   </div>
@@ -133,7 +174,7 @@ ${reviewsBlock()}
   <div class="wrap split">
     <div>
       <p class="eyebrow">Areas we cover</p>
-      <h2 id="areas-h">Local VELUX installers for South Devon</h2>
+      <h2 id="areas-h">Local roofers for South Devon</h2>
       <p>We are based in Kingskerswell, right between Newton Abbot and Torquay, so most of our work is a short drive from home. Choose your town to see the work we do there.</p>
     </div>
     ${areaLinks}
@@ -147,7 +188,7 @@ ${reviewsBlock()}
       <p class="eyebrow">About us</p>
       <h2 id="about-h">A family business, not a call centre</h2>
       <p>The Dixons is a family-run roofing and leadwork business based in Kingskerswell. When you call, you speak to the people who will do the job. We give straight advice, turn up when we say we will, and leave your home clean and tidy.</p>
-      <p>VELUX roof windows are our speciality, but we are experienced roofers and leadworkers too, so the roof around your new window is in safe hands.</p>
+      <p>We are roofers and leadworkers by trade and VELUX Certified Installers too, so whether it is a new roof window, a leaking chimney or a full re-roof, the same experienced team does the work.</p>
     </div>
   </div>
 </section>
@@ -164,8 +205,8 @@ ${ctaBand()}`;
 
   return page({
     path: '/',
-    title: 'VELUX Certified Installer | Newton Abbot & Torbay | The Dixons',
-    description: 'VELUX Certified Installers in Kingskerswell. New roof windows, replacements, blinds and repairs across Newton Abbot, Torquay, Paignton, Brixham and Totnes.',
+    title: 'VELUX, Roofing & Leadwork | Newton Abbot & Torbay | The Dixons',
+    description: 'VELUX Certified Installers, roofers and leadworkers in Kingskerswell. Roof windows, re-roofs, repairs and leadwork across Newton Abbot, Torbay and Totnes.',
     body,
     schema: [
       { '@type': 'WebSite', '@id': site.url + '/#website', url: site.url + '/', name: site.name, publisher: { '@id': businessId } },
@@ -184,13 +225,6 @@ function velux() {
     ['Can you fix a leaking roof window?', 'Usually, yes. Leaks often come from the flashing or the roof around the window rather than the glass. As roofers and leadworkers we can repair both.'],
     ['Do you fit electric and solar windows?', 'Yes. Electric and solar-powered VELUX windows are ideal for windows that are out of reach, and they can close automatically when it rains.'],
   ];
-  const section = (id, title, paras, label, flip = false) => `<section class="section ${flip ? 'alt' : ''}" id="${id}" aria-labelledby="${id}-h">
-  <div class="wrap split ${flip ? 'flip' : ''}">
-    <div><h2 id="${id}-h">${title}</h2>${paras.map((p) => `<p>${p}</p>`).join('')}</div>
-    ${photo(label, '4/3')}
-  </div>
-</section>`;
-
   const body = `
 <section class="page-hero">
   <div class="wrap">
@@ -243,6 +277,14 @@ ${section('loft-conversions', 'Loft conversions', [
 
 ${reviewsBlock('Trusted by local VELUX customers')}
 
+<section class="section alt" aria-labelledby="also-h">
+  <div class="wrap">
+    <h2 id="also-h">Roofing and leadwork too</h2>
+    <p class="section-lede">Because we are roofers and leadworkers as well as VELUX installers, we can deal with the whole roof, not just the window.</p>
+    ${roofLeadCards}
+  </div>
+</section>
+
 <section class="section" aria-labelledby="how-h">
   <div class="wrap">
     <h2 id="how-h">How it works</h2>
@@ -264,7 +306,7 @@ ${reviewsBlock('Trusted by local VELUX customers')}
   </div>
 </section>
 
-${ctaBand()}`;
+${ctaBand('Get a free VELUX quote')}`;
 
   return page({
     path: '/velux-windows/',
@@ -290,6 +332,184 @@ ${ctaBand()}`;
   });
 }
 
+
+// ---------- Roofing & leadwork hubs ----------
+function serviceHub({ path, crumb, eyebrow, h1, lede, quoteParam, list, sections, faqs, faqTitle, otherTitle, otherText, cta, title, description, serviceName, serviceType }) {
+  const body = `
+<section class="page-hero">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">/</span> <span>${crumb}</span></nav>
+    <p class="eyebrow">${eyebrow}</p>
+    <h1>${h1}</h1>
+    <p class="lede">${lede}</p>
+    <div class="btn-row">${callBtn()}<a class="btn btn-secondary" href="/contact/?service=${quoteParam}">Get a free quote</a></div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="svc-h">
+  <div class="wrap">
+    <h2 id="svc-h" class="visually-hidden">Our ${crumb.toLowerCase()} services</h2>
+    ${cards(list, '')}
+  </div>
+</section>
+
+${sections.map(([id, t, paras, label], i) => section(id, t, paras, label, i % 2 === 0)).join('\n')}
+
+${reviewsBlock()}
+
+<section class="section alt" aria-labelledby="other-h">
+  <div class="wrap split">
+    <div>
+      <h2 id="other-h">${otherTitle}</h2>
+      <p>${otherText}</p>
+      <p><a class="btn btn-secondary" href="/velux-windows/">VELUX roof windows</a></p>
+    </div>
+    ${reviewCard(reviews[1])}
+  </div>
+</section>
+
+<section class="section" aria-labelledby="how-h">
+  <div class="wrap">
+    <h2 id="how-h">How it works</h2>
+    ${steps}
+  </div>
+</section>
+
+<section class="section alt" aria-labelledby="areas-h">
+  <div class="wrap">
+    <h2 id="areas-h">Local ${crumb.toLowerCase()} near you</h2>
+    ${areaLinks}
+  </div>
+</section>
+
+<section class="section" aria-labelledby="faq-h">
+  <div class="wrap narrow">
+    <h2 id="faq-h">${faqTitle}</h2>
+    ${faqHtml(faqs)}
+  </div>
+</section>
+
+${ctaBand(cta)}`;
+
+  return page({
+    path, title, description, body,
+    schema: [
+      {
+        '@type': 'Service',
+        name: serviceName,
+        serviceType,
+        provider: { '@id': businessId },
+        areaServed: areaNames.map((n) => ({ '@type': 'City', name: n })),
+        hasOfferCatalog: {
+          '@type': 'OfferCatalog',
+          name: serviceName,
+          itemListElement: list.map((x) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: x.title } })),
+        },
+      },
+      breadcrumbs([['Home', '/'], [crumb, path]]),
+      faqSchema(faqs),
+    ],
+  });
+}
+
+function roofing() {
+  return serviceHub({
+    path: '/roofing/',
+    crumb: 'Roofing',
+    eyebrow: 'Pitched roofing',
+    h1: 'Roofing in Newton Abbot, Torbay &amp; South Devon',
+    lede: 'Re-roofs, roof repairs, ridges and chimneys in natural slate and tile. We are a family-run roofing firm based in Kingskerswell, and we find and fix the real cause of a problem rather than patching over it.',
+    quoteParam: 'roofing',
+    list: roofingServices,
+    sections: [
+      ['re-roofing', 'Re-roofing in slate and tile', [
+        'When a roof is past repairing, with slates sliding, battens rotten or leaks appearing in several places, a re-roof is the long-term answer.',
+        'We strip the old covering back to the rafters, check and replace any damaged timber, then fit a new breathable membrane, treated battens and your choice of natural slate or tile, with new ridges, flashings and leadwork to finish.',
+        'Where we can, we reclaim sound slates to keep the character of an older roof, and we can match existing materials on terraces and conservation-area properties.',
+      ], 'Slate re-roof in progress'],
+      ['repairs', 'Roof repairs and leaks', [
+        'Most leaks start small: a slipped slate, a cracked tile, a gap in the flashing. Left alone, water gets into the battens, rafters and ceilings below.',
+        'We trace the leak back to its source, which is often some distance from the damp patch inside, and repair it with matching materials. We also handle storm damage, nail fatigue on older slate roofs and emergency make-safe work.',
+      ], 'Replacing slipped slates'],
+      ['ridges', 'Ridge and hip tiles', [
+        'Ridge and hip tiles bedded in mortar crack and loosen over time, especially on exposed coastal roofs. Loose ridges let water in and can be dangerous in high winds.',
+        'We can re-bed and repoint them in mortar, or fit a mechanically fixed dry ridge and dry hip system that needs far less maintenance.',
+      ], 'Re-bedding ridge tiles'],
+      ['chimneys', 'Chimney repairs', [
+        'Chimneys take the worst of the weather and are one of the most common sources of leaks. Crumbling pointing, cracked flaunching and failed flashings all let water in.',
+        'We repoint stacks, renew flaunching, fit cowls and caps, and replace flashings with properly dressed lead. As leadworkers, we can do the whole job in one visit.',
+      ], 'Chimney stack repair'],
+      ['inspections', 'Roof inspections', [
+        'Buying a house, worried after a storm, or just not sure what state your roof is in? We will inspect it, take photos, and tell you plainly what needs doing now, what can wait and what is fine.',
+      ], 'Roof inspection'],
+    ],
+    faqTitle: 'Roofing FAQs',
+    faqs: [
+      ['How do I know if I need a new roof or just repairs?', 'If the problems are isolated, such as a few slipped slates or one leak, repairs are usually the right answer. Widespread slipping, rotten battens or repeated leaks in different places point to a re-roof. We will tell you honestly which makes more sense.'],
+      ['How long does a re-roof take?', 'A typical house re-roof takes one to two weeks depending on size, access and weather. We will give you a clear timescale with your quote.'],
+      ['Do you work with natural slate?', 'Yes. Natural slate is common across South Devon, especially on older homes, and we re-roof and repair slate roofs regularly, including reclaiming and reusing sound slates.'],
+      ['Can you come out after storm damage?', 'Yes. Call us and we will make the roof safe and watertight as quickly as we can, then arrange a proper repair.'],
+      ['Do you need scaffolding for roof repairs?', 'Smaller repairs can often be done from roof ladders. Larger jobs, chimneys and re-roofs need scaffolding for safety, and we arrange it and include it in the quote.'],
+    ],
+    otherTitle: 'Roof windows done by roofers',
+    otherText: 'We are VELUX Certified Installers, so if you are re-roofing it is the ideal time to add or replace roof windows. We fit them as part of the same job, with the flashings and leadwork done properly.',
+    cta: 'Get a free roofing quote',
+    title: 'Roofers in Newton Abbot & Torbay | Re-roofs & Repairs',
+    description: 'Family-run roofers in Kingskerswell. Slate and tile re-roofs, roof repairs, ridges, chimneys and storm damage across Newton Abbot, Torbay and Totnes.',
+    serviceName: 'Roofing services',
+    serviceType: 'Roofing',
+  });
+}
+
+function leadwork() {
+  return serviceHub({
+    path: '/leadwork/',
+    crumb: 'Leadwork',
+    eyebrow: 'Traditional leadwork',
+    h1: 'Leadwork in Newton Abbot, Torbay &amp; South Devon',
+    lede: 'Lead flashings, chimney leadwork, valleys and traditional lead roofs, cut and dressed by hand. Good leadwork lasts for decades, and it is where most roof leaks are won or lost.',
+    quoteParam: 'leadwork',
+    list: leadServices,
+    sections: [
+      ['flashings', 'Lead flashings', [
+        'Wherever a roof meets a wall, a chimney, a dormer or an extension, there needs to be a flashing. Lead is still the best material for the job: it lasts, it can be shaped to fit almost anything, and it moves with the building.',
+        'We fit step and cover flashings, aprons and soakers, chased into the brickwork and dressed neatly to the roof, using the right thickness of lead for each detail.',
+      ], 'Step flashing against a wall'],
+      ['chimney-leadwork', 'Chimney leadwork', [
+        'Leaks around chimneys are one of the most common calls we get. Usually the cause is old or badly fitted leadwork: a perished back gutter, a cracked apron, or flashings that have pulled away from the stack.',
+        'We strip out the old lead and fit a complete new set, with the back gutter, side flashings and front apron all made to suit your stack.',
+      ], 'New lead around a chimney stack'],
+      ['valleys', 'Lead valleys and gutters', [
+        'Valleys carry a lot of water where two roof slopes meet, and parapet and box gutters do the same behind walls. When the lead splits or the joints fail, water goes straight into the building.',
+        'We reline valleys and gutters in new lead, with correctly sized sheets and joints so the lead can expand and contract without cracking.',
+      ], 'Relined lead valley'],
+      ['bays', 'Bay, porch and dormer roofs', [
+        'Bay windows, porches, canopies and dormers on older homes were often roofed in lead, and many are now due for replacement.',
+        'We lay new lead roofs the traditional way, with wood-cored rolls, drips and welted edges, so they look right on a period property and last for decades.',
+      ], 'Lead roof on a bay window'],
+      ['patination', 'Finishing and aftercare', [
+        'New lead is treated with patination oil once fitted, which protects it, stops white staining running down walls and gives it an even finish while it weathers.',
+        'If you have lost lead to theft, we can replace it in lead or advise on alternatives where security is a concern.',
+      ], 'Finished leadwork'],
+    ],
+    faqTitle: 'Leadwork FAQs',
+    faqs: [
+      ['How long does lead flashing last?', 'Properly fitted lead can last for decades, often longer than the roof covering around it. Most problems come from poor original fitting rather than the lead wearing out.'],
+      ['My chimney leaks when it rains. Is it the leadwork?', 'Very often, yes. Failed flashings, back gutters and aprons are the most common causes of chimney leaks, though pointing and flaunching can also be to blame. We will inspect it and tell you what we find.'],
+      ['Can you replace stolen lead?', 'Yes. We can replace it in lead, or talk you through alternative materials if the building is at risk of further theft.'],
+      ['Do you do leadwork for other roofers and builders?', 'Yes. We take on leadwork as part of extensions, loft conversions and new builds, as well as for homeowners directly.'],
+      ['What is patination oil?', 'It is a treatment applied to new lead that protects the surface and prevents the white run-off staining that new lead can leave on walls and roofs.'],
+    ],
+    otherTitle: 'Leadwork and roof windows',
+    otherText: 'Lead and roof windows go hand in hand. As VELUX Certified Installers and leadworkers, we can fit a new roof window and finish all the lead detailing around it properly.',
+    cta: 'Get a free leadwork quote',
+    title: 'Leadwork Specialists | Newton Abbot & Torbay | The Dixons',
+    description: 'Lead flashings, chimney leadwork, valleys and traditional lead bay roofs, hand-dressed by a family firm in Kingskerswell. Covering Newton Abbot, Torbay and Totnes.',
+    serviceName: 'Leadwork services',
+    serviceType: 'Leadwork',
+  });
+}
+
 // ---------- Areas ----------
 function areaPage(a) {
   const path = `/areas/${a.slug}/`;
@@ -299,7 +519,7 @@ function areaPage(a) {
   <div class="wrap">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">/</span> <a href="/areas/">Areas</a> <span aria-hidden="true">/</span> <span>${esc(a.name)}</span></nav>
     ${badge}
-    <h1>VELUX installer &amp; roofer in ${esc(a.name)}</h1>
+    <h1>VELUX, roofing &amp; leadwork in ${esc(a.name)}</h1>
     <p class="lede">${a.lead}</p>
     <div class="btn-row">${callBtn()}<a class="btn btn-secondary" href="/contact/?area=${a.slug}">Get a free quote in ${esc(a.name)}</a></div>
   </div>
@@ -323,25 +543,39 @@ function areaPage(a) {
   </div>
 </section>
 
-<section class="section">
+<section class="section" id="roofing">
+  <div class="wrap">
+    <div class="split">
+      <div>
+        <h2>Roofing &amp; leadwork in ${esc(a.name)}</h2>
+        ${a.roofing.map((p) => `<p>${p}</p>`).join('')}
+      </div>
+      ${photo(`Roofing job in ${a.name}`, '4/3')}
+    </div>
+    <h3 class="sub-h">Our roofing and leadwork services in ${esc(a.name)}</h3>
+    ${cards([roofingServices[0], roofingServices[1], leadServices[0], roofingServices[3]].map((x) => ({ ...x, href: (leadServices.includes(x) ? '/leadwork/#' : '/roofing/#') + x.id })), '')}
+  </div>
+</section>
+
+<section class="section alt">
   <div class="wrap">
     <h2>Recent work in ${esc(a.name)}</h2>
     <div class="work-grid">
-      ${[1, 2].map((n) => `<article class="work">${photo(`${a.name} job ${n}`, '4/3')}<h3>Job in ${esc(a.name)}</h3><p class="todo-note">Write-up to come.</p></article>`).join('')}
+      ${['VELUX job', 'Roofing job', 'Leadwork job'].map((t) => `<article class="work">${photo(`${t} in ${a.name}`, '4/3')}<h3>${t} in ${esc(a.name)}</h3><p class="todo-note">Write-up to come.</p></article>`).join('')}
     </div>
   </div>
 </section>
 
 ${reviewsBlock()}
 
-<section class="section">
+<section class="section alt">
   <div class="wrap narrow">
-    <h2>${esc(a.name)} roof window questions</h2>
+    <h2>${esc(a.name)} roofing and roof window questions</h2>
     ${faqHtml(a.faqs)}
   </div>
 </section>
 
-<section class="section alt">
+<section class="section">
   <div class="wrap">
     <h2>We also cover</h2>
     <ul class="area-list">${nearby.map((n) => `<li><a href="/areas/${n.slug}/">${icon.pin}<span>${esc(n.name)}</span></a></li>`).join('')}
@@ -349,21 +583,21 @@ ${reviewsBlock()}
   </div>
 </section>
 
-${ctaBand(`Need a VELUX installer in ${esc(a.name)}?`)}`;
+${ctaBand(`Need a roofer or VELUX installer in ${esc(a.name)}?`)}`;
 
   return page({
     path,
-    title: `VELUX Installer & Roofer in ${a.name} | The Dixons`,
-    description: `VELUX Certified Installers ${a.home ? 'based in' : 'covering'} ${a.name}. New roof windows, replacements, blinds and leak repairs from a local family roofing firm. Free quotes.`,
+    title: `VELUX, Roofing & Leadwork in ${a.name} | The Dixons`,
+    description: `VELUX Certified Installers, roofers and leadworkers ${a.home ? 'based in' : 'covering'} ${a.name}. Roof windows, re-roofs, roof repairs, chimneys and lead flashings. Free quotes.`,
     body,
     schema: [
-      {
+      ...[['VELUX roof windows', 'Roof window installation'], ['Roofing', 'Roofing'], ['Leadwork', 'Leadwork']].map(([n, t]) => ({
         '@type': 'Service',
-        name: `VELUX roof windows in ${a.name}`,
-        serviceType: 'Roof window installation',
+        name: `${n} in ${a.name}`,
+        serviceType: t,
         provider: { '@id': businessId },
         areaServed: { '@type': 'City', name: a.name },
-      },
+      })),
       breadcrumbs([['Home', '/'], ['Areas', '/areas/'], [a.name, path]]),
       faqSchema(a.faqs),
     ],
@@ -376,19 +610,19 @@ function areasIndex() {
   <div class="wrap">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">/</span> <span>Areas</span></nav>
     <h1>Areas we cover</h1>
-    <p class="lede">We are based in Kingskerswell and fit VELUX roof windows across Teignbridge, Torbay and the South Hams, plus the villages in between. Not sure if we cover you? Just ask.</p>
+    <p class="lede">We are based in Kingskerswell and work across Teignbridge, Torbay and the South Hams, plus the villages in between: VELUX roof windows, roofing and leadwork. Not sure if we cover you? Just ask.</p>
   </div>
 </section>
 <section class="section">
   <div class="wrap">
-    <div class="card-grid">${areas.map((a) => `<a class="card" href="/areas/${a.slug}/"><div class="card-body"><h2 class="h3">${esc(a.name)}</h2><p>${a.lead}</p><span class="more">VELUX in ${esc(a.name)}</span></div></a>`).join('')}</div>
+    <div class="card-grid">${areas.map((a) => `<a class="card" href="/areas/${a.slug}/"><div class="card-body"><h2 class="h3">${esc(a.name)}</h2><p>${a.lead}</p><span class="more">Our work in ${esc(a.name)}</span></div></a>`).join('')}</div>
   </div>
 </section>
 ${ctaBand()}`;
   return page({
     path: '/areas/',
-    title: 'Areas We Cover | VELUX Installers in South Devon | The Dixons',
-    description: 'VELUX Certified Installers covering Kingskerswell, Newton Abbot, Kingsteignton, Torquay, Paignton, Brixham and Totnes.',
+    title: 'Areas We Cover | Roofers & VELUX Installers | The Dixons',
+    description: 'VELUX Certified Installers, roofers and leadworkers covering Kingskerswell, Newton Abbot, Kingsteignton, Torquay, Paignton, Brixham and Totnes.',
     body,
     schema: [breadcrumbs([['Home', '/'], ['Areas', '/areas/']])],
   });
@@ -420,7 +654,11 @@ function contact() {
           <option value="velux-replace">Replace a roof window</option>
           <option value="velux-blinds">VELUX blinds or shutters</option>
           <option value="velux-repair">Roof window leak or repair</option>
-          <option value="roofing">Other roofing or leadwork</option>
+          <option value="roof-repair">Roof repair or leak</option>
+          <option value="re-roof">Re-roof</option>
+          <option value="leadwork">Leadwork or flashings</option>
+          <option value="chimney">Chimney repair</option>
+          <option value="other">Something else</option>
         </select>
       </div>
       <div class="field"><label for="f-msg">Tell us about the job</label><textarea id="f-msg" name="message" rows="5" placeholder="For example: two old roof windows in a loft bedroom, one leaks in heavy rain."></textarea></div>
@@ -445,7 +683,7 @@ function contact() {
   return page({
     path: '/contact/',
     title: 'Contact & Free Quotes | The Dixons Roofing & Leadwork',
-    description: 'Get a free VELUX or roofing quote from The Dixons in Kingskerswell. Call, WhatsApp us photos or send an enquiry online.',
+    description: 'Get a free VELUX, roofing or leadwork quote from The Dixons in Kingskerswell. Call, WhatsApp us photos or send an enquiry online.',
     body,
     schema: [breadcrumbs([['Home', '/'], ['Contact', '/contact/']]), { '@type': 'ContactPage', url: site.url + '/contact/', about: { '@id': businessId } }],
   });
@@ -478,6 +716,8 @@ export function allPages() {
   return [
     ['index.html', home()],
     ['velux-windows/index.html', velux()],
+    ['roofing/index.html', roofing()],
+    ['leadwork/index.html', leadwork()],
     ['areas/index.html', areasIndex()],
     ...areas.map((a) => [`areas/${a.slug}/index.html`, areaPage(a)]),
     ['contact/index.html', contact()],

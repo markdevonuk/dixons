@@ -26,8 +26,9 @@ export const photo = (label, ratio = '4/3', cls = '') =>
 
 const nav = [
   { href: '/velux-windows/', label: 'VELUX windows' },
-  { href: '/areas/', label: 'Areas we cover' },
-  { href: '/#reviews', label: 'Reviews' },
+  { href: '/roofing/', label: 'Roofing' },
+  { href: '/leadwork/', label: 'Leadwork' },
+  { href: '/areas/', label: 'Areas' },
   { href: '/contact/', label: 'Contact' },
 ];
 
@@ -59,7 +60,7 @@ export function businessSchema() {
     openingHoursSpecification: site.hours.map((h) => ({
       '@type': 'OpeningHoursSpecification', dayOfWeek: h.days, opens: h.opens, closes: h.closes,
     })),
-    knowsAbout: ['VELUX roof windows', 'Roof window installation', 'Roof window replacement', 'Leadwork', 'Pitched roofing', 'Roof repairs'],
+    knowsAbout: ['VELUX roof windows', 'Roof window installation', 'Roof window replacement', 'Pitched roofing', 'Re-roofing', 'Slate roofing', 'Tiled roofing', 'Roof repairs', 'Leadwork', 'Lead flashings', 'Chimney repairs'],
     hasCredential: { '@type': 'EducationalOccupationalCredential', name: 'VELUX Certified Installer' },
     identifier: { '@type': 'PropertyValue', propertyID: 'Companies House', value: site.companyNumber },
     sameAs: [site.social.facebook, site.social.instagram, site.veluxListingUrl].filter(Boolean),
@@ -124,9 +125,8 @@ ${noindex ? '<meta name="robots" content="noindex">' : ''}
 <a class="skip" href="#main">Skip to content</a>
 <header class="site-header">
   <div class="wrap header-inner">
-    <a class="brand" href="/" aria-label="The Dixons Roofing and Leadwork, home">
-      <img src="/assets/img/icon.svg" width="52" height="52" alt="">
-      <span class="brand-text"><strong>The Dixons</strong><small>VELUX · Roofing · Leadwork</small></span>
+    <a class="brand" href="/">
+      <img src="/assets/img/logo.svg" width="96" height="96" alt="The Dixons: VELUX, roofing and leadwork. Home">
     </a>
     <nav class="site-nav" aria-label="Main">
       <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list">Menu</button>
@@ -138,6 +138,7 @@ ${noindex ? '<meta name="robots" content="noindex">' : ''}
   </div>
   <div class="trust-strip"><div class="wrap">
     <span>${icon.check} VELUX Certified Installer</span>
+    <span>${icon.check} Roofing &amp; leadwork specialists</span>
     <span>${icon.check} Family-run, based in Kingskerswell</span>
     <span>${icon.check} Free, no-obligation quotes</span>
   </div></div>
@@ -149,7 +150,7 @@ ${body}
   <div class="wrap footer-grid">
     <div>
       <img src="/assets/img/logo.svg" width="120" height="120" alt="The Dixons: VELUX, roofing and leadwork" loading="lazy">
-      <p>VELUX Certified Installers and roofers serving Newton Abbot, Torbay and the South Hams from our base in Kingskerswell.</p>
+      <p>VELUX Certified Installers, roofers and leadworkers serving Newton Abbot, Torbay and the South Hams from our base in Kingskerswell.</p>
     </div>
     <div>
       <h2>Contact</h2>
@@ -173,6 +174,10 @@ ${body}
         <li><a href="/velux-windows/#replacement">VELUX window replacement</a></li>
         <li><a href="/velux-windows/#blinds">VELUX blinds &amp; shutters</a></li>
         <li><a href="/velux-windows/#repairs">Roof window repairs &amp; flashings</a></li>
+        <li><a href="/roofing/">Pitched roofing &amp; re-roofing</a></li>
+        <li><a href="/roofing/#repairs">Roof repairs</a></li>
+        <li><a href="/leadwork/">Leadwork &amp; flashings</a></li>
+        <li><a href="/roofing/#chimneys">Chimney repairs</a></li>
       </ul>
     </div>
   </div>
