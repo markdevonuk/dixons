@@ -41,6 +41,34 @@ export const site = {
     instagram: null, // TODO
   },
 
+  // Accreditations, each with its public listing so customers can check it.
+  // Scopes are worded exactly as the listings show them (checked Oct 2026):
+  // TrustMark is via the VELUX scheme for "VELUX Installations" and "VELUX Repairs";
+  // CERTASS lists "Competent Person - Non-Domestic Glazing" only, so don't claim domestic self-certification.
+  accreditations: [
+    {
+      id: 'velux',
+      name: 'VELUX Certified Installer',
+      short: 'VELUX Certified',
+      detail: 'Approved by VELUX to install their roof windows',
+      url: null, // = veluxListingUrl once known
+    },
+    {
+      id: 'trustmark',
+      name: 'TrustMark registered',
+      short: 'TrustMark',
+      detail: 'Government Endorsed Quality scheme, for VELUX installations and repairs. Licence 1769025',
+      url: "https://www.trustmark.org.uk/firms/Dixon's%20Roofing%20&%20Leadwork%20Ltd-1769025-TQ12%205HF?id=00951b57-efbb-4ca4-b14c-066e1d5f1d04",
+    },
+    {
+      id: 'certass',
+      name: 'CERTASS registered',
+      short: 'CERTASS',
+      detail: 'Member of the CERTASS trade association. Registration 20-1635',
+      url: 'https://certifiedcompetent.co.uk/profile/20-1635/the-dixons/',
+    },
+  ],
+
   // Links to verify the accreditation — TODO: paste their VELUX installer-finder listing URL
   veluxListingUrl: null,
 

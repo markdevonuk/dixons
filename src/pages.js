@@ -1,7 +1,7 @@
 import { site, areaNames } from './site.js';
 import { slots, townReviews, reviewSummary, googleReviewsUrl } from './reviews.js';
 import { areas, areaBySlug } from './areas.js';
-import { page, esc, icon, callBtn, waLink, photo, breadcrumbs, faqSchema, faqHtml, businessId } from './layout.js';
+import { page, accreditationBadges, esc, icon, callBtn, waLink, photo, breadcrumbs, faqSchema, faqHtml, businessId } from './layout.js';
 
 // ---------- Shared blocks ----------
 const badge = `<div class="velux-badge" role="img" aria-label="VELUX Certified Installer">
@@ -120,7 +120,8 @@ const areaLinks = `<ul class="area-list">${areas
 // ---------- Home ----------
 function home() {
   const faqs = [
-    ['What is a VELUX Certified Installer?', 'It means we have been approved by VELUX to install their products. Certified installers are listed on the VELUX website, so you can check us before you book.'],
+    ['What is a VELUX Certified Installer?', 'It means we have been approved by VELUX to install their products. Certified installers are listed on the VELUX website, so you can check us before you book. We are also TrustMark registered for VELUX installations and repairs.'],
+    ['Are you accredited?', 'Yes. We are VELUX Certified Installers, TrustMark registered for VELUX installations and repairs, and members of the CERTASS trade association. Each one has a public listing you can check, linked at the bottom of every page.'],
     ['Which areas do you cover?', `We are based in Kingskerswell and work across ${areaNames.slice(1, -1).join(', ')} and ${areaNames.at(-1)}, plus the surrounding villages.`],
     ['Do you only do VELUX windows?', 'No. VELUX roof windows are a big part of what we do, but we are roofers and leadworkers by trade. We take on re-roofs, roof repairs, chimney work and all kinds of leadwork.'],
     ['Can you fix a leaking roof?', 'Yes. Most leaks come from slipped slates or tiles, failed flashings, chimneys or valleys. We find the actual cause and fix it properly, rather than covering it up.'],
@@ -170,6 +171,7 @@ function home() {
       <p>Most problems with roof windows are not the window itself. They are leaks, draughts and condensation caused by poor flashing, missing insulation collars or rushed fitting.</p>
       <ul class="ticks">
         <li>${icon.check} Approved by VELUX and listed on their installer finder</li>
+        <li>${icon.check} TrustMark registered for VELUX installations and repairs, the Government Endorsed Quality scheme</li>
         <li>${icon.check} Correct flashing kits, insulation and vapour barriers every time</li>
         <li>${icon.check} Roofers and leadworkers, so the roof around the window is done right too</li>
         <li>${icon.check} Genuine VELUX products with the manufacturer’s guarantee</li>
@@ -177,6 +179,7 @@ function home() {
     </div>
     ${reviewCard(slots.homeFeatured)}
   </div>
+  <div class="wrap acc-row">${accreditationBadges()}</div>
 </section>
 
 ${reviewsBlock('What our customers say', true, slots.home)}
@@ -253,6 +256,7 @@ function velux() {
     ['Do I need planning permission for a roof window?', 'Most roof windows on houses fall under permitted development, within limits. Conservation areas and listed buildings have tighter rules. We will advise you before any work starts.'],
     ['How do I find out which VELUX window I have?', 'Open the window and look for the data plate at the top of the frame. It shows the type and size code, which tells us exactly what replacement or blind you need. Send us a photo of it.'],
     ['Can you fix a leaking roof window?', 'Usually, yes. Leaks often come from the flashing or the roof around the window rather than the glass. As roofers and leadworkers we can repair both.'],
+    ['Are you TrustMark registered?', 'Yes. We are TrustMark registered for VELUX installations and repairs, licence number 1769025. You can check our listing on the TrustMark website.'],
     ['Do you fit electric and solar windows?', 'Yes. Electric and solar-powered VELUX windows are ideal for windows that are out of reach, and they can close automatically when it rains.'],
   ];
   const body = `
@@ -270,6 +274,14 @@ function velux() {
   <div class="wrap">
     <h2 id="svc-h" class="visually-hidden">Our VELUX services</h2>
     ${serviceCards('')}
+  </div>
+</section>
+
+<section class="section alt" aria-labelledby="acc-h">
+  <div class="wrap">
+    <h2 id="acc-h">Approved, registered and easy to check</h2>
+    <p class="section-lede">VELUX approve us to fit their windows, and our VELUX installations and repairs are registered with TrustMark, the Government Endorsed Quality scheme. You do not have to take our word for it: each listing is public.</p>
+    ${accreditationBadges()}
   </div>
 </section>
 
@@ -711,6 +723,8 @@ function contact() {
       <p><a class="btn btn-whatsapp" href="${waLink()}" rel="noopener">${icon.whatsapp}<span>WhatsApp us</span></a></p>
       <h2 class="h3">Email</h2>
       <p><a href="mailto:${site.email.address}">${esc(site.email.address)}</a></p>
+      <h2 class="h3">Accredited</h2>
+      ${accreditationBadges('compact')}
       <h2 class="h3">Where we are</h2>
       <p>Based in ${esc(site.address.locality)}, ${esc(site.address.town)}. Covering ${areaNames.slice(1).join(', ')}.</p>
     </aside>

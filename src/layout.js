@@ -30,6 +30,14 @@ export const callBtn = (cls = 'btn btn-primary') =>
 export const waLink = (text = "Hi, I'd like a quote. Here are some photos of the job:") =>
   `https://wa.me/${site.whatsapp.number}?text=${encodeURIComponent(text)}`;
 
+// Accreditation badges. Each links to its public listing where one exists, so customers can check it.
+const accUrl = (a) => a.url || (a.id === 'velux' ? site.veluxListingUrl : null);
+export const accreditationBadges = (cls = '') => `<ul class="acc-badges ${cls}">${site.accreditations
+  .map((a) => {
+    const inner = `<span class="acc-mark acc-${a.id}">${esc(a.short)}</span><span class="acc-text"><strong>${esc(a.name)}</strong><small>${esc(a.detail)}</small>${accUrl(a) ? '<span class="acc-check">Check our listing</span>' : ''}</span>`;
+    return `<li>${accUrl(a) ? `<a href="${esc(accUrl(a))}" target="_blank" rel="noopener">${inner}</a>` : `<div>${inner}</div>`}</li>`;
+  }).join('')}</ul>`;
+
 export const photo = (label, ratio = '4/3', cls = '') =>
   `<figure class="ph ${cls}" style="aspect-ratio:${ratio}" role="img" aria-label="${esc(label)}"><span>Photo to come: ${esc(label)}</span></figure>`;
 
@@ -70,9 +78,13 @@ export function businessSchema() {
       '@type': 'OpeningHoursSpecification', dayOfWeek: h.days, opens: h.opens, closes: h.closes,
     })),
     knowsAbout: ['VELUX roof windows', 'Roof window installation', 'Roof window replacement', 'Pitched roofing', 'Re-roofing', 'Slate roofing', 'Tiled roofing', 'Roof repairs', 'Leadwork', 'Lead flashings', 'Chimney repairs'],
-    hasCredential: { '@type': 'EducationalOccupationalCredential', name: 'VELUX Certified Installer' },
+    hasCredential: site.accreditations.map((a) => ({
+      '@type': 'EducationalOccupationalCredential',
+      name: a.name,
+      ...(accUrl(a) ? { url: accUrl(a) } : {}),
+    })),
     identifier: { '@type': 'PropertyValue', propertyID: 'Companies House', value: site.companyNumber },
-    sameAs: [site.social.facebook, site.social.instagram, site.veluxListingUrl].filter(Boolean),
+    sameAs: [site.social.facebook, site.social.instagram, ...site.accreditations.map(accUrl)].filter(Boolean),
   };
 }
 
@@ -148,9 +160,9 @@ ${noindex ? '<meta name="robots" content="noindex">' : ''}
   <div class="trust-strip"><div class="wrap">
     <a class="trust-rating" href="${googleReviewsUrl}" target="_blank" rel="noopener nofollow"><span class="stars" aria-hidden="true">★★★★★</span> ${reviewSummary.average.toFixed(1)} from ${reviewSummary.count} Google reviews</a>
     <span>${icon.check} VELUX Certified Installer</span>
+    <span>${icon.check} TrustMark registered for VELUX</span>
     <span>${icon.check} Roofing &amp; leadwork specialists</span>
-    <span>${icon.check} Family-run, based in Kingskerswell</span>
-    <span>${icon.check} Free, no-obligation quotes</span>
+    <span>${icon.check} Family-run in Kingskerswell</span>
   </div></div>
 </header>
 <main id="main">
@@ -190,6 +202,10 @@ ${body}
         <li><a href="/roofing/#chimneys">Chimney repairs</a></li>
       </ul>
     </div>
+  </div>
+  <div class="wrap footer-acc">
+    <h2>Accreditations</h2>
+    ${accreditationBadges('on-dark')}
   </div>
   <div class="wrap legal">
     <p>&copy; ${year} ${esc(site.legalName)}. Registered in ${esc(site.registeredIn)}, company no. ${esc(site.companyNumber)}. Registered office: ${esc(a.street)}, ${esc(a.locality)}, ${esc(a.town)} ${esc(a.postcode)}.</p>
