@@ -34,7 +34,7 @@ One-off setup: repo **Settings → Pages → Source: GitHub Actions**.
 
 - `/` — VELUX-led homepage
 - `/velux-windows/` — VELUX hub (installation, replacement, blinds, repairs, conservation, loft conversions)
-- `/areas/` plus Kingskerswell, Newton Abbot, Kingsteignton, Torquay, Paignton, Brixham, Totnes, Teignmouth, Bovey Tracey, Chudleigh, Ashburton
+- `/areas/` plus Kingskerswell, Newton Abbot, Kingsteignton, Totnes, Ashburton, Bovey Tracey, Chudleigh, Teignmouth, Torquay, Paignton, Brixham
 - `/contact/`, `/privacy/`, `/404.html`
 
 ## SEO built in

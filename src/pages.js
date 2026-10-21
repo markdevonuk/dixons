@@ -132,7 +132,7 @@ function home() {
   <div class="wrap hero-inner">
     <div class="hero-copy">
       ${badge}
-      <h1>VELUX roof windows, fitted properly, across Newton Abbot and Torbay</h1>
+      <h1>VELUX roof windows, fitted properly, from Newton Abbot to Totnes, Ashburton to Chudleigh and beyond</h1>
       <p class="lede">We are a family-run team of VELUX Certified Installers, roofers and leadworkers, based in Kingskerswell since ${site.since}. Roof windows, re-roofs, repairs and leadwork, with honest advice and a fixed price.</p>
       <div class="btn-row">
         ${callBtn()}
@@ -203,7 +203,7 @@ ${reviewsBlock('What our customers say', true, slots.home)}
     <p class="eyebrow">Recent work</p>
     <h2 id="work-h">Recent jobs</h2>
     <div class="work-grid">
-      ${['VELUX replacement, Newton Abbot', 'Slate re-roof, Torquay', 'Chimney leadwork, Brixham']
+      ${['VELUX replacement, Newton Abbot', 'Slate re-roof, Totnes', 'Chimney leadwork, Brixham']
         .map((t) => `<article class="work">${photo(t, '4/3')}<h3>${t}</h3><p class="todo-note">Job write-up to come.</p></article>`).join('')}
     </div>
   </div>
@@ -214,7 +214,7 @@ ${reviewsBlock('What our customers say', true, slots.home)}
     <div>
       <p class="eyebrow">Areas we cover</p>
       <h2 id="areas-h">Local roofers for South Devon</h2>
-      <p>We are based in Kingskerswell, right between Newton Abbot and Torquay, so most of our work is a short drive from home. Choose your town to see the work we do there.</p>
+      <p>We are based in Kingskerswell, just outside Newton Abbot, so most of our work is a short drive from home. Choose your town to see the work we do there.</p>
     </div>
     ${areaLinks}
   </div>
@@ -244,8 +244,8 @@ ${ctaBand()}`;
 
   return page({
     path: '/',
-    title: 'VELUX, Roofing & Leadwork | Newton Abbot & Torbay | The Dixons',
-    description: 'VELUX Certified Installers, roofers and leadworkers in Kingskerswell. Roof windows, re-roofs, repairs and leadwork across Newton Abbot, Torbay and Totnes.',
+    title: 'VELUX, Roofing & Leadwork | Newton Abbot & South Devon | The Dixons',
+    description: 'VELUX Certified Installers, roofers and leadworkers in Kingskerswell. Roof windows, re-roofs, repairs and leadwork from Newton Abbot to Totnes, Ashburton and Chudleigh.',
     body,
     schema: [
       { '@type': 'WebSite', '@id': site.url + '/#website', url: site.url + '/', name: site.name, publisher: { '@id': businessId } },
@@ -271,7 +271,7 @@ function velux() {
     <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">/</span> <span>VELUX windows</span></nav>
     ${badge}
     <h1>VELUX window installation, replacement &amp; repairs</h1>
-    <p class="lede">VELUX Certified Installers covering Newton Abbot, Torbay, Teignmouth, Totnes, Bovey Tracey, Chudleigh, Ashburton and the villages in between. We fit new windows, replace old ones, add blinds and fix leaks, with the roof around them done properly.</p>
+    <p class="lede">VELUX Certified Installers covering Newton Abbot, Totnes, Ashburton, Bovey Tracey, Chudleigh, Teignmouth, Torbay and the villages in between. We fit new windows, replace old ones, add blinds and fix leaks, with the roof around them done properly.</p>
     <div class="btn-row">${callBtn()}<a class="btn btn-secondary" href="/contact/?service=velux">Get a free VELUX quote</a></div>
   </div>
 </section>
@@ -314,7 +314,7 @@ ${section('repairs', 'Roof window repairs &amp; flashings', [
 ], 'Repairing the flashing around a roof window', true)}
 
 ${section('conservation', 'Conservation roof windows', [
-  'For period homes and conservation areas, such as parts of Totnes, Torquay and Newton Abbot, VELUX conservation windows sit low in the roof with a slim, traditional look.',
+  'For period homes and conservation areas, such as parts of Totnes, Ashburton and Newton Abbot, VELUX conservation windows sit low in the roof with a slim, traditional look.',
   'We can advise on what is likely to be acceptable and whether you need permission from your local council before any work starts.',
 ], 'Conservation-style roof window on a slate roof')}
 
@@ -358,8 +358,8 @@ ${ctaBand('Get a free VELUX quote')}`;
 
   return page({
     path: '/velux-windows/',
-    title: 'VELUX Window Installation & Replacement | Torbay & Newton Abbot',
-    description: 'VELUX Certified Installers for Newton Abbot, Torquay, Paignton, Brixham and Totnes. New and replacement roof windows, blinds and leak repairs. Free quotes.',
+    title: 'VELUX Window Installation & Replacement | Newton Abbot & Totnes',
+    description: 'VELUX Certified Installers for Newton Abbot, Totnes, Ashburton, Chudleigh and Teignmouth. New and replacement roof windows, blinds and leak repairs. Free quotes.',
     body,
     schema: [
       {
@@ -470,7 +470,7 @@ function roofing() {
     service: 'roofing',
     crumb: 'Roofing',
     eyebrow: 'Pitched roofing',
-    h1: 'Roofing in Newton Abbot, Torbay &amp; South Devon',
+    h1: 'Roofing in Newton Abbot, Totnes &amp; South Devon',
     lede: 'Re-roofs, roof repairs, ridges and chimneys in natural slate and tile. We are a family-run roofing firm based in Kingskerswell, and we find and fix the real cause of a problem rather than patching over it.',
     quoteParam: 'roofing',
     list: roofingServices,
@@ -507,8 +507,8 @@ function roofing() {
     otherTitle: 'Roof windows done by roofers',
     otherText: 'We are VELUX Certified Installers, so if you are re-roofing it is the ideal time to add or replace roof windows. We fit them as part of the same job, with the flashings and leadwork done properly.',
     cta: 'Get a free roofing quote',
-    title: 'Roofers in Newton Abbot & Torbay | Re-roofs & Repairs',
-    description: 'Family-run roofers in Kingskerswell. Slate and tile re-roofs, roof repairs, ridges, chimneys and storm damage across Newton Abbot, Torbay and Totnes.',
+    title: 'Roofers in Newton Abbot & Totnes | Re-roofs & Repairs',
+    description: 'Family-run roofers in Kingskerswell. Slate and tile re-roofs, roof repairs, ridges, chimneys and storm damage from Newton Abbot to Totnes, Ashburton and Chudleigh.',
     serviceName: 'Roofing services',
     serviceType: 'Roofing',
   });
@@ -520,7 +520,7 @@ function leadwork() {
     service: 'leadwork',
     crumb: 'Leadwork',
     eyebrow: 'Traditional leadwork',
-    h1: 'Leadwork in Newton Abbot, Torbay &amp; South Devon',
+    h1: 'Leadwork in Newton Abbot, Totnes &amp; South Devon',
     lede: 'Lead flashings, chimney leadwork, valleys and traditional lead roofs, cut and dressed by hand. Good leadwork lasts for decades, and it is where most roof leaks are won or lost.',
     quoteParam: 'leadwork',
     list: leadServices,
@@ -557,8 +557,8 @@ function leadwork() {
     otherTitle: 'Leadwork and roof windows',
     otherText: 'Lead and roof windows go hand in hand. As VELUX Certified Installers and leadworkers, we can fit a new roof window and finish all the lead detailing around it properly.',
     cta: 'Get a free leadwork quote',
-    title: 'Leadwork Specialists | Newton Abbot & Torbay | The Dixons',
-    description: 'Lead flashings, chimney leadwork, valleys and traditional lead bay roofs, hand-dressed by a family firm in Kingskerswell. Covering Newton Abbot, Torbay and Totnes.',
+    title: 'Leadwork Specialists | Newton Abbot & South Devon | The Dixons',
+    description: 'Lead flashings, chimney leadwork, valleys and traditional lead bay roofs, hand-dressed by a family firm in Kingskerswell. Covering Newton Abbot, Totnes, Ashburton and Chudleigh.',
     serviceName: 'Leadwork services',
     serviceType: 'Leadwork',
   });
@@ -664,7 +664,7 @@ function areasIndex() {
   <div class="wrap">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">/</span> <span>Areas</span></nav>
     <h1>Areas we cover</h1>
-    <p class="lede">We are based in Kingskerswell and work across Teignbridge, Torbay, the South Hams and the edge of Dartmoor, plus the villages in between: VELUX roof windows, roofing and leadwork. Not sure if we cover you? Just ask.</p>
+    <p class="lede">We are based in Kingskerswell and work across Teignbridge, the South Hams, the edge of Dartmoor and Torbay, plus the villages in between: VELUX roof windows, roofing and leadwork. Not sure if we cover you? Just ask.</p>
   </div>
 </section>
 <section class="section">
@@ -676,7 +676,7 @@ ${ctaBand()}`;
   return page({
     path: '/areas/',
     title: 'Areas We Cover | Roofers & VELUX Installers | The Dixons',
-    description: 'VELUX Certified Installers, roofers and leadworkers covering Kingskerswell, Newton Abbot, Torbay, Teignmouth, Totnes, Bovey Tracey, Chudleigh and Ashburton.',
+    description: 'VELUX Certified Installers, roofers and leadworkers covering Kingskerswell, Newton Abbot, Totnes, Ashburton, Bovey Tracey, Chudleigh, Teignmouth and Torbay.',
     body,
     schema: [breadcrumbs([['Home', '/'], ['Areas', '/areas/']])],
   });

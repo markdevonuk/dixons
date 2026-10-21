@@ -177,7 +177,7 @@ ${body}
   <div class="wrap footer-grid">
     <div>
       <img src="/assets/img/logo.svg" width="120" height="120" alt="The Dixons: VELUX, roofing and leadwork" loading="lazy">
-      <p>A family business since ${site.since}. VELUX Certified Installers, roofers and leadworkers serving Newton Abbot, Torbay and the South Hams from our base in Kingskerswell.</p>
+      <p>A family business since ${site.since}. VELUX Certified Installers, roofers and leadworkers serving Newton Abbot, the South Hams and the edge of Dartmoor from our base in Kingskerswell.</p>
     </div>
     <div>
       <h2>Contact</h2>

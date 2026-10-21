@@ -17,7 +17,7 @@ export const areas = [
       'The village has everything from slate-roofed cottages and old stone walls to post-war homes with concrete tiles. We repair and re-roof them all, and we know the local roofs well because we live among them.',
       'Being on the doorstep means we can get to storm damage, slipped slates and chimney leaks quickly, and make things safe before a small problem becomes a big one.',
     ],
-    nearby: ['newton-abbot', 'torquay', 'kingsteignton'],
+    nearby: ['newton-abbot', 'kingsteignton', 'totnes'],
     faqs: [
       ['Can you do small roofing jobs in the village?', 'Yes. Being local, we are happy to take on small jobs like a few slipped slates, a loose ridge or a leaking flashing, as well as full re-roofs.'],
       ['Are you really based in Kingskerswell?', 'Yes. The Dixons are a family business based in Kingskerswell, and most of our work is within a short drive of the village.'],
@@ -235,5 +235,9 @@ export const areas = [
     ],
   },
 ];
+
+// Display order: home first, Torbay last (the owners get little work there, Oct 2026)
+const order = ['kingskerswell', 'newton-abbot', 'kingsteignton', 'totnes', 'ashburton', 'bovey-tracey', 'chudleigh', 'teignmouth', 'torquay', 'paignton', 'brixham'];
+areas.sort((a, b) => order.indexOf(a.slug) - order.indexOf(b.slug));
 
 export const areaBySlug = Object.fromEntries(areas.map((a) => [a.slug, a]));

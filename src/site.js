@@ -80,14 +80,14 @@ export const areaNames = [
   'Kingskerswell',
   'Newton Abbot',
   'Kingsteignton',
+  'Totnes',
+  'Ashburton',
+  'Bovey Tracey',
+  'Chudleigh',
+  'Teignmouth',
   'Torquay',
   'Paignton',
   'Brixham',
-  'Totnes',
-  'Teignmouth',
-  'Bovey Tracey',
-  'Chudleigh',
-  'Ashburton',
 ];
 
 // Reviews: see src/reviews.js (slots) and src/reviews-data.js (generated from Google).
