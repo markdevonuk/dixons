@@ -271,7 +271,7 @@ function velux() {
     <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">/</span> <span>VELUX windows</span></nav>
     ${badge}
     <h1>VELUX window installation, replacement &amp; repairs</h1>
-    <p class="lede">VELUX Certified Installers covering Newton Abbot, Torquay, Paignton, Brixham, Totnes and the villages in between. We fit new windows, replace old ones, add blinds and fix leaks, with the roof around them done properly.</p>
+    <p class="lede">VELUX Certified Installers covering Newton Abbot, Torbay, Teignmouth, Totnes, Bovey Tracey, Chudleigh, Ashburton and the villages in between. We fit new windows, replace old ones, add blinds and fix leaks, with the roof around them done properly.</p>
     <div class="btn-row">${callBtn()}<a class="btn btn-secondary" href="/contact/?service=velux">Get a free VELUX quote</a></div>
   </div>
 </section>
@@ -664,7 +664,7 @@ function areasIndex() {
   <div class="wrap">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">/</span> <span>Areas</span></nav>
     <h1>Areas we cover</h1>
-    <p class="lede">We are based in Kingskerswell and work across Teignbridge, Torbay and the South Hams, plus the villages in between: VELUX roof windows, roofing and leadwork. Not sure if we cover you? Just ask.</p>
+    <p class="lede">We are based in Kingskerswell and work across Teignbridge, Torbay, the South Hams and the edge of Dartmoor, plus the villages in between: VELUX roof windows, roofing and leadwork. Not sure if we cover you? Just ask.</p>
   </div>
 </section>
 <section class="section">
@@ -676,7 +676,7 @@ ${ctaBand()}`;
   return page({
     path: '/areas/',
     title: 'Areas We Cover | Roofers & VELUX Installers | The Dixons',
-    description: 'VELUX Certified Installers, roofers and leadworkers covering Kingskerswell, Newton Abbot, Kingsteignton, Torquay, Paignton, Brixham and Totnes.',
+    description: 'VELUX Certified Installers, roofers and leadworkers covering Kingskerswell, Newton Abbot, Torbay, Teignmouth, Totnes, Bovey Tracey, Chudleigh and Ashburton.',
     body,
     schema: [breadcrumbs([['Home', '/'], ['Areas', '/areas/']])],
   });

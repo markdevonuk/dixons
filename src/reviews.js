@@ -37,11 +37,11 @@ export const slots = {
 };
 
 // Town pages show one review per trade. Each pool is rotated by the town's position so the
-// seven towns get different reviews; a review that names a town takes that town's slot.
+// towns get different reviews; a review that names a town takes that town's slot.
 const pools = {
-  velux: ['anne-wakeham', 'kevin-sumner', 'jude-peace-portraits', 'andy-liddle', 'kaz-martin', 'audrey-gooding', 'maureen-gillen'],
-  roofing: ['roger-lane', 'stephen-watson', 'simon-powell', 'rebecca-wollerton', 'nicky-allen', 'rachel-yarham', 'cadl-videography'],
-  leadwork: ['david-twigger', 'richard-mitchell', 'jane-baker', 'paul-douch', 'richard-hamer', 'daniel-warry', 'nick-seddon'],
+  velux: ['anne-wakeham', 'kevin-sumner', 'jude-peace-portraits', 'andy-liddle', 'kaz-martin', 'audrey-gooding', 'maureen-gillen', 'neil-baker', 'richard-bennett', 'tim-durrant', 'sue-mcgivern'],
+  roofing: ['roger-lane', 'stephen-watson', 'simon-powell', 'rebecca-wollerton', 'nicky-allen', 'rachel-yarham', 'cadl-videography', 'sandra-law', 'colin-baker', 'rachel-bullock', 'luke-carnaby'],
+  leadwork: ['david-twigger', 'richard-mitchell', 'jane-baker', 'paul-douch', 'richard-hamer', 'daniel-warry', 'nick-seddon', 'rosalind-lamble', 'roger-lane'],
 };
 
 export function townReviews(slug, index) {

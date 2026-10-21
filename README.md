@@ -24,7 +24,7 @@ One-off setup: repo **Settings → Pages → Source: GitHub Actions**.
 | `src/reviews.js` | Which Google review appears in which slot on each page |
 | `src/reviews-data.js` | Generated from the Google reviews export, do not edit by hand |
 | `scripts/import-reviews.py` | Re-import reviews: `python3 scripts/import-reviews.py export.xlsx`; service and town tags live here |
-| `src/areas.js` | Copy and FAQs for the seven town pages |
+| `src/areas.js` | Copy and FAQs for the town pages |
 | `src/pages.js` | Page content: home, VELUX hub, areas, contact, privacy, 404 |
 | `src/layout.js` | Shared head, header, footer, structured data (schema.org) |
 | `assets/` | CSS, JS, self-hosted fonts, logo and icons |
@@ -34,13 +34,13 @@ One-off setup: repo **Settings → Pages → Source: GitHub Actions**.
 
 - `/` — VELUX-led homepage
 - `/velux-windows/` — VELUX hub (installation, replacement, blinds, repairs, conservation, loft conversions)
-- `/areas/` plus Kingskerswell, Newton Abbot, Kingsteignton, Torquay, Paignton, Brixham, Totnes
+- `/areas/` plus Kingskerswell, Newton Abbot, Kingsteignton, Torquay, Paignton, Brixham, Totnes, Teignmouth, Bovey Tracey, Chudleigh, Ashburton
 - `/contact/`, `/privacy/`, `/404.html`
 
 ## SEO built in
 
 - Unique titles and descriptions per page, canonical URLs, `en-GB` / `en_GB` locale
-- `RoofingContractor` schema on every page (address, geo, all seven towns in `areaServed`, VELUX credential, company number), plus `Service`, `BreadcrumbList` and `FAQPage` where relevant
+- `RoofingContractor` schema on every page (address, geo, every town in `areaServed`, VELUX credential, company number), plus `Service`, `BreadcrumbList` and `FAQPage` where relevant
 - Review text is shown on the page but **not** marked up as Review schema: Google does not show stars for reviews a business publishes about itself, and it can be treated as spam
 - `sitemap.xml`, `robots.txt`, and 301 redirects from old WordPress URLs (`_redirects`, Netlify/Cloudflare format)
 - Self-hosted fonts, no third-party trackers, no cookies
