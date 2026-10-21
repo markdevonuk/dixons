@@ -2,7 +2,7 @@ import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { site, areaNames } from './site.js';
 import { areas } from './areas.js';
-import { reviewSummary, googleReviewsUrl } from './reviews.js';
+import { reviewSummary, googleReviewsUrl, leaveReviewUrl } from './reviews.js';
 
 export const esc = (s = '') =>
   String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -185,6 +185,7 @@ ${body}
         <li><a href="tel:${site.phone.tel}">${esc(site.phone.display)}</a></li>
         <li><a href="mailto:${site.email.address}">${esc(site.email.address)}</a></li>
         <li><a href="${waLink()}" rel="noopener">WhatsApp us photos</a></li>
+        <li><a href="${leaveReviewUrl}" target="_blank" rel="noopener nofollow">Leave us a Google review</a></li>
       </ul>
       <p class="small">${esc(a.locality)}, ${esc(a.town)}, ${esc(a.region)} ${esc(a.postcode)}</p>
       <p class="small">${esc(hoursText)}. Closed weekends.</p>

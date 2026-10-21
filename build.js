@@ -3,6 +3,7 @@ import { mkdirSync, writeFileSync, readFileSync, rmSync, cpSync } from 'node:fs'
 import { dirname, join } from 'node:path';
 import { site } from './src/site.js';
 import { allPages } from './src/pages.js';
+import { googleWriteReviewUrl } from './src/reviews.js';
 
 const OUT = 'dist';
 // Preview builds (e.g. GitHub Pages at /dixons/): BASE_PATH=/dixons PREVIEW=1 node build.js
@@ -69,6 +70,7 @@ const scan = (obj, path) => {
   }
 };
 scan(site, 'site.');
+if (!googleWriteReviewUrl) todos.push('Google "leave a review" link (src/reviews.js → googleWriteReviewUrl)');
 todos.push('VELUX badge artwork (src/pages.js → badge)', 'Real job photos (every "Photo to come" block)', 'Job write-ups for Recent work');
 
 console.log(`Built ${pages.length} pages → ${OUT}/${BASE ? ` (base ${BASE})` : ''}${PREVIEW ? ' [preview, noindex]' : ''}`);

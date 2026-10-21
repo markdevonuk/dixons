@@ -1,5 +1,5 @@
 import { site, areaNames } from './site.js';
-import { slots, townReviews, reviewSummary, googleReviewsUrl } from './reviews.js';
+import { slots, townReviews, reviewSummary, googleReviewsUrl, leaveReviewUrl } from './reviews.js';
 import { areas, areaBySlug } from './areas.js';
 import { page, accreditationBadges, hoursText, esc, icon, callBtn, waLink, photo, breadcrumbs, faqSchema, faqHtml, businessId } from './layout.js';
 
@@ -40,7 +40,7 @@ const reviewCard = (r) => {
 </figure>`;
 };
 
-const ratingSummary = `<p class="rating-summary"><span>${stars(5)} <strong>${reviewSummary.average.toFixed(1)} out of 5</strong> from ${reviewSummary.count} Google reviews</span> <a href="${googleReviewsUrl}" target="_blank" rel="noopener nofollow">Read them all on Google</a></p>`;
+const ratingSummary = `<p class="rating-summary"><span>${stars(5)} <strong>${reviewSummary.average.toFixed(1)} out of 5</strong> from ${reviewSummary.count} Google reviews</span> <a href="${googleReviewsUrl}" target="_blank" rel="noopener nofollow">Read them all on Google</a> <a href="${leaveReviewUrl}" target="_blank" rel="noopener nofollow">Leave us a review</a></p>`;
 
 // Each page passes its own hand-picked list (see src/reviews.js); empty list renders nothing.
 const reviewsBlock = (heading, alt, list) => list.length ? `<section class="section reviews${alt ? ' alt' : ''}" id="reviews" aria-labelledby="reviews-h">

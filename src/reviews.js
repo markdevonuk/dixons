@@ -8,6 +8,13 @@ export { reviewSummary };
 export const googleReviewsUrl =
   'https://www.google.com/maps/place/Dixons+Roofing+and+Leadwork/@50.4890112,-4.0966628,91616m/data=!3m1!1e3!4m8!3m7!1s0x486d05f9cdd6af47:0xd7bf557054b23ce2!8m2!3d50.4890397!4d-3.7670345!9m1!1b1!16s%2Fg%2F11hw9_3zkx?entry=ttu';
 
+// "Leave a review" link. Paste the short review link from the Google Business Profile here
+// (Business Profile → "Ask for reviews" / "Get more reviews" → copy link, e.g. https://g.page/r/XXXX/review),
+// which opens the review box directly. Until then it falls back to the reviews page above,
+// which has a "Write a review" button.
+export const googleWriteReviewUrl = null;
+export const leaveReviewUrl = googleWriteReviewUrl || googleReviewsUrl;
+
 const byId = Object.fromEntries(allReviews.map((r) => [r.id, r]));
 export const review = (id) => {
   if (!byId[id]) throw new Error(`Unknown review id: ${id}`);
