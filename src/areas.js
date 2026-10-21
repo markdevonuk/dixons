@@ -236,8 +236,7 @@ export const areas = [
   },
 ];
 
-// Display order: home first, Torbay last (the owners get little work there, Oct 2026)
-const order = ['kingskerswell', 'newton-abbot', 'kingsteignton', 'totnes', 'ashburton', 'bovey-tracey', 'chudleigh', 'teignmouth', 'torquay', 'paignton', 'brixham'];
-areas.sort((a, b) => order.indexOf(a.slug) - order.indexOf(b.slug));
+// Display order: alphabetical
+areas.sort((a, b) => a.name.localeCompare(b.name, 'en-GB'));
 
 export const areaBySlug = Object.fromEntries(areas.map((a) => [a.slug, a]));
