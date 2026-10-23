@@ -728,6 +728,9 @@ function contact() {
       <p><a class="btn btn-whatsapp" href="${waLink()}" rel="noopener">${icon.whatsapp}<span>WhatsApp us</span></a></p>
       <h2 class="h3">Email</h2>
       <p><a href="mailto:${site.email.address}">${esc(site.email.address)}</a></p>
+      <h2 class="h3">Had work done by us?</h2>
+      <p>We would really appreciate a review. It only takes a minute and helps other local homeowners find us.</p>
+      <p><a class="btn btn-secondary" href="${leaveReviewUrl}" target="_blank" rel="noopener nofollow"><span class="stars" aria-hidden="true">★★★★★</span> <span>Leave us a Google review</span></a></p>
       <h2 class="h3">Accredited</h2>
       ${accreditationBadges('compact')}
       <h2 class="h3">Opening hours</h2>
