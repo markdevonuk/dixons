@@ -27,7 +27,7 @@ One-off setup: repo **Settings → Pages → Source: GitHub Actions**.
 | `src/areas.js` | Copy and FAQs for the town pages |
 | `src/pages.js` | Page content: home, VELUX hub, areas, contact, privacy, 404 |
 | `src/layout.js` | Shared head, header, footer, structured data (schema.org) |
-| `assets/` | CSS, JS, self-hosted fonts, logo and icons |
+| `assets/` | CSS, JS, self-hosted fonts, logo, icons and accreditation logos (`img/accreditations/`) |
 | `build.js` | Writes pages, `sitemap.xml`, `robots.txt`, `_redirects` |
 
 ## Pages
@@ -52,7 +52,7 @@ Run `npm run build` to see the live list. Currently:
 - Phone, mobile, WhatsApp number, email
 - Confirm the public address (currently the registered office) matches the Google Business Profile
 - Opening hours, founding year
-- VELUX installer-finder listing URL, official VELUX Certified Installer badge artwork
+- VELUX installer-finder listing URL
 - Form endpoint (depends on the host)
 - Real photos for every "Photo to come" block, and job write-ups for Recent work
 - Review the privacy policy wording

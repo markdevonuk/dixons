@@ -40,6 +40,8 @@ export const site = {
   },
 
   // Accreditations, each with its public listing so customers can check it.
+  // Logos are the official scheme artwork, in assets/img/accreditations/ as <file>-<h>.webp at 1x and 2x;
+  // w and h are the 1x size.
   // Scopes are worded exactly as the listings show them (checked Oct 2026):
   // TrustMark is via the VELUX scheme for "VELUX Installations" and "VELUX Repairs";
   // CERTASS lists "Competent Person - Non-Domestic Glazing" only, so don't claim domestic self-certification.
@@ -48,6 +50,7 @@ export const site = {
       id: 'velux',
       name: 'VELUX Certified Installer',
       short: 'VELUX Certified',
+      logo: { file: 'velux-certified-installer', w: 120, h: 120 },
       detail: 'Approved by VELUX and listed on their installer finder',
       // VELUX has no direct profile link, so this goes to the finder and customers search by postcode
       url: 'https://velux.co.uk/get-started/find-installer',
@@ -58,6 +61,7 @@ export const site = {
       id: 'trustmark',
       name: 'TrustMark registered',
       short: 'TrustMark',
+      logo: { file: 'trustmark', w: 222, h: 60 },
       detail: 'Government Endorsed Quality scheme, for VELUX installations and repairs. Licence 1769025',
       url: "https://www.trustmark.org.uk/firms/Dixon's%20Roofing%20&%20Leadwork%20Ltd-1769025-TQ12%205HF?id=00951b57-efbb-4ca4-b14c-066e1d5f1d04",
     },
@@ -65,12 +69,11 @@ export const site = {
       id: 'certass',
       name: 'CERTASS registered',
       short: 'CERTASS',
+      logo: { file: 'certass-certified-competent', w: 156, h: 60 },
       detail: 'Member of the CERTASS trade association. Registration 20-1635',
       url: 'https://certifiedcompetent.co.uk/profile/20-1635/the-dixons/',
     },
   ],
-
-  // VELUX has no public listing link for them, so the VELUX badge is shown without one.
 
   formEndpoint: null, // TODO: Formspree / Netlify / Cloudflare form endpoint once hosting chosen
 };

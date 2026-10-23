@@ -1,13 +1,12 @@
 import { site, areaNames } from './site.js';
 import { slots, townReviews, reviewSummary, googleReviewsUrl, leaveReviewUrl } from './reviews.js';
 import { areas, areaBySlug } from './areas.js';
-import { page, accreditationBadges, hoursText, esc, icon, callBtn, waLink, photo, breadcrumbs, faqSchema, faqHtml, businessId } from './layout.js';
+import { page, accreditationBadges, accLogo, hoursText, esc, icon, callBtn, waLink, photo, breadcrumbs, faqSchema, faqHtml, businessId } from './layout.js';
 
 // ---------- Shared blocks ----------
-const badge = `<div class="velux-badge" role="img" aria-label="VELUX Certified Installer">
-  <span class="vb-top">VELUX</span><span class="vb-bottom">Certified Installer</span>
-</div>`;
-// TODO: swap .velux-badge for the official badge artwork from the VELUX installer portal.
+// Official VELUX Certified Installer badge, shown at the top of the home, VELUX and town pages.
+const veluxAcc = site.accreditations.find((a) => a.id === 'velux');
+const badge = `<a class="velux-badge" href="${veluxAcc.url}" target="_blank" rel="noopener" title="Find us on the VELUX installer finder">${accLogo(veluxAcc, { alt: 'VELUX Certified Installer', lazy: false })}</a>`;
 
 const serviceLabel = { velux: 'VELUX windows', roofing: 'Roofing', leadwork: 'Leadwork' };
 const monthYear = (ym) => new Date(ym + '-01').toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });

@@ -36,9 +36,15 @@ export const hoursText = site.hours.map((h) => `${h.days[0]} to ${h.days.at(-1)}
 
 // Accreditation badges. Each links to its public listing where one exists, so customers can check it.
 const accUrl = (a) => a.url || null;
+// Official scheme logo at 1x and 2x. Alt is empty because the scheme name is right beside it.
+export const accLogo = (a, { alt = '', lazy = true } = {}) => {
+  const { file, w, h } = a.logo;
+  const src = (x) => `/assets/img/accreditations/${file}-${h * x}.webp`;
+  return `<img src="${src(1)}" srcset="${src(1)} 1x, ${src(2)} 2x" width="${w}" height="${h}" alt="${esc(alt)}"${lazy ? ' loading="lazy"' : ''} decoding="async">`;
+};
 export const accreditationBadges = (cls = '') => `<ul class="acc-badges ${cls}">${site.accreditations
   .map((a) => {
-    const inner = `<span class="acc-mark acc-${a.id}">${esc(a.short)}</span><span class="acc-text"><strong>${esc(a.name)}</strong><small>${esc(a.detail)}</small>${accUrl(a) ? `<span class="acc-check">${esc(a.checkText || 'Check our listing')}</span>` : ''}</span>`;
+    const inner = `<span class="acc-mark acc-${a.id}">${accLogo(a)}</span><span class="acc-text"><strong>${esc(a.name)}</strong><small>${esc(a.detail)}</small>${accUrl(a) ? `<span class="acc-check">${esc(a.checkText || 'Check our listing')}</span>` : ''}</span>`;
     return `<li>${accUrl(a) ? `<a href="${esc(accUrl(a))}" target="_blank" rel="noopener">${inner}</a>` : `<div>${inner}</div>`}</li>`;
   }).join('')}</ul>`;
 
