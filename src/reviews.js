@@ -12,7 +12,7 @@ export const googleReviewsUrl =
 // (Business Profile → "Ask for reviews" / "Get more reviews" → copy link, e.g. https://g.page/r/XXXX/review),
 // which opens the review box directly. Until then it falls back to the reviews page above,
 // which has a "Write a review" button.
-export const googleWriteReviewUrl = null;
+export const googleWriteReviewUrl = 'https://g.page/r/CeI8slRwVb_XEBM/review'; // supplied by Mark, Oct 2026
 export const leaveReviewUrl = googleWriteReviewUrl || googleReviewsUrl;
 
 const byId = Object.fromEntries(allReviews.map((r) => [r.id, r]));
