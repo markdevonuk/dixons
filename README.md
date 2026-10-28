@@ -25,6 +25,8 @@ One-off setup: repo **Settings → Pages → Source: GitHub Actions**.
 | `src/reviews-data.js` | Generated from the Google reviews export, do not edit by hand |
 | `scripts/import-reviews.py` | Re-import reviews: `python3 scripts/import-reviews.py export.xlsx`; service and town tags live here |
 | `src/areas.js` | Copy and FAQs for the town pages |
+| `src/photos.js` | Job photos: alt text, focal points and the rotating pools used on town pages |
+| `scripts/process-photos.py` | Turns original photos into WebP (blurs plates and house names) |
 | `src/pages.js` | Page content: home, VELUX hub, areas, contact, privacy, 404 |
 | `src/layout.js` | Shared head, header, footer, structured data (schema.org) |
 | `assets/` | CSS, JS, self-hosted fonts, logo, icons and accreditation logos (`img/accreditations/`) |
@@ -54,6 +56,6 @@ Run `npm run build` to see the live list. Currently:
 - Opening hours, founding year
 - VELUX installer-finder listing URL
 - Form endpoint (depends on the host)
-- Real photos for every "Photo to come" block, and job write-ups for Recent work
+- Job write-ups for Recent work (photos are in; see `src/photos.js` to swap any)
 - Review the privacy policy wording
 - Roofing, leadwork and about pages, then add their old URLs to `_redirects`

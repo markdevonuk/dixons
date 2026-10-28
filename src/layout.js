@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs';
 import { site, areaNames } from './site.js';
 import { areas } from './areas.js';
 import { reviewSummary, googleReviewsUrl, leaveReviewUrl } from './reviews.js';
+import { photoImg } from './photos.js';
 
 export const esc = (s = '') =>
   String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -48,8 +49,10 @@ export const accreditationBadges = (cls = '') => `<ul class="acc-badges ${cls}">
     return `<li>${accUrl(a) ? `<a href="${esc(accUrl(a))}" target="_blank" rel="noopener">${inner}</a>` : `<div>${inner}</div>`}</li>`;
   }).join('')}</ul>`;
 
-export const photo = (label, ratio = '4/3', cls = '') =>
-  `<figure class="ph ${cls}" style="aspect-ratio:${ratio}" role="img" aria-label="${esc(label)}"><span>Photo to come: ${esc(label)}</span></figure>`;
+// A job photo by key (see src/photos.js). Anything else is treated as a label and shows a placeholder.
+export const photo = (key, ratio = '4/3', cls = '', opts = {}) =>
+  photoImg(key, ratio, { cls, ...opts }) ||
+  `<figure class="ph ${cls}" style="aspect-ratio:${ratio}" role="img" aria-label="${esc(key)}"><span>Photo to come: ${esc(key)}</span></figure>`;
 
 const nav = [
   { href: '/velux-windows/', label: 'VELUX windows' },

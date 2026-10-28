@@ -1,6 +1,9 @@
 import { site, areaNames } from './site.js';
 import { slots, townReviews, reviewSummary, googleReviewsUrl, leaveReviewUrl } from './reviews.js';
 import { areas, areaBySlug } from './areas.js';
+import { pick } from './photos.js';
+
+const photoPriority = ['newton-abbot', 'kingskerswell', 'totnes', 'kingsteignton', 'ashburton', 'chudleigh', 'bovey-tracey', 'teignmouth', 'brixham', 'paignton', 'torquay'];
 import { page, accreditationBadges, accLogo, hoursText, esc, icon, callBtn, waLink, photo, breadcrumbs, faqSchema, faqHtml, businessId } from './layout.js';
 
 // ---------- Shared blocks ----------
@@ -70,29 +73,29 @@ const steps = `<ol class="steps">
 </ol>`;
 
 const veluxServices = [
-  { id: 'installation', title: 'New VELUX installation', text: 'Brighten a dark loft room, landing or bathroom with a new roof window, fitted with the correct flashing kit and insulation collar.' },
-  { id: 'replacement', title: 'VELUX window replacement', text: 'Swap a tired, leaking or misted roof window for a current VELUX model, usually in a day and often without touching the plaster inside.' },
-  { id: 'blinds', title: 'Blinds & shutters', text: 'Blackout, solar-powered and insect-screen blinds and exterior shutters to keep rooms dark, cool and usable all year.' },
-  { id: 'repairs', title: 'Repairs & flashings', text: 'Leaks, broken hinges, failed seals and storm damage. As roofers and leadworkers we fix the roof around the window too.' },
+  { img: 'velux-slate-roof-drone', id: 'installation', title: 'New VELUX installation', text: 'Brighten a dark loft room, landing or bathroom with a new roof window, fitted with the correct flashing kit and insulation collar.' },
+  { img: 'velux-replacement-old-slate', id: 'replacement', title: 'VELUX window replacement', text: 'Swap a tired, leaking or misted roof window for a current VELUX model, usually in a day and often without touching the plaster inside.' },
+  { img: 'velux-loft-room', id: 'blinds', title: 'Blinds & shutters', text: 'Blackout, solar-powered and insect-screen blinds and exterior shutters to keep rooms dark, cool and usable all year.' },
+  { img: 'velux-three-windows-slate', id: 'repairs', title: 'Repairs & flashings', text: 'Leaks, broken hinges, failed seals and storm damage. As roofers and leadworkers we fix the roof around the window too.' },
 ];
 
 const roofingServices = [
-  { id: 're-roofing', title: 'Re-roofing', text: 'Complete re-roofs in natural slate and tile, stripped back to the rafters with new membrane, battens and fixings.' },
-  { id: 'repairs', title: 'Roof repairs', text: 'Slipped and broken slates or tiles, leaks and storm damage, found and fixed properly rather than patched.' },
-  { id: 'ridges', title: 'Ridges & hips', text: 'Loose or cracked ridge and hip tiles re-bedded, repointed or upgraded to a modern dry-fix system.' },
-  { id: 'chimneys', title: 'Chimney repairs', text: 'Repointing, flaunching, cowls and new lead flashings to stop chimney leaks for good.' },
+  { img: 'slate-roof-cottage-drone', id: 're-roofing', title: 'Re-roofing', text: 'Complete re-roofs in natural slate and tile, stripped back to the rafters with new membrane, battens and fixings.' },
+  { img: 'slate-valley-repair', id: 'repairs', title: 'Roof repairs', text: 'Slipped and broken slates or tiles, leaks and storm damage, found and fixed properly rather than patched.' },
+  { img: 'slate-house-drone-overhead', id: 'ridges', title: 'Ridges & hips', text: 'Loose or cracked ridge and hip tiles re-bedded, repointed or upgraded to a modern dry-fix system.' },
+  { img: 'chimney-stack-lead', id: 'chimneys', title: 'Chimney repairs', text: 'Repointing, flaunching, cowls and new lead flashings to stop chimney leaks for good.' },
 ];
 
 const leadServices = [
-  { id: 'flashings', title: 'Lead flashings', text: 'Step, cover and apron flashings where roofs meet walls, dormers and extensions, cut and dressed by hand.' },
-  { id: 'chimney-leadwork', title: 'Chimney leadwork', text: 'Back gutters, aprons and soakers around chimney stacks, the most common source of roof leaks we see.' },
-  { id: 'valleys', title: 'Valleys & gutters', text: 'Lead valleys and parapet or box gutters relined, so water runs off the roof instead of into the house.' },
-  { id: 'bays', title: 'Bay & porch roofs', text: 'Traditional lead roofs on bay windows, porches, canopies and dormers, laid with proper rolls and joints.' },
+  { img: 'lead-flashing-brick', id: 'flashings', title: 'Lead flashings', text: 'Step, cover and apron flashings where roofs meet walls, dormers and extensions, cut and dressed by hand.' },
+  { img: 'lead-collar-cedar-shingles', id: 'chimney-leadwork', title: 'Chimney leadwork', text: 'Back gutters, aprons and soakers around chimney stacks, the most common source of roof leaks we see.' },
+  { img: 'lead-gutter-welding', id: 'valleys', title: 'Valleys & gutters', text: 'Lead valleys and parapet or box gutters relined, so water runs off the roof instead of into the house.' },
+  { img: 'lead-porch-canopy', id: 'bays', title: 'Bay & porch roofs', text: 'Traditional lead roofs on bay windows, porches, canopies and dormers, laid with proper rolls and joints.' },
 ];
 
 const cards = (list, linkBase) => `<div class="card-grid">${list
   .map((s) => `<a class="card" href="${s.href || `${linkBase}#${s.id}`}">
-    ${photo(s.title, '3/2')}
+    ${photo(s.img || s.title, '3/2', '', { sizes: '(min-width: 1100px) 260px, (min-width: 700px) 45vw, 100vw' })}
     <div class="card-body"><h3>${s.title}</h3><p>${s.text}</p><span class="more">Find out more</span></div>
   </a>`).join('')}</div>`;
 
@@ -100,9 +103,9 @@ const serviceCards = (linkBase = '/velux-windows/') => cards(veluxServices, link
 
 // Two big cards pointing at the roofing and leadwork hubs
 const roofLeadCards = `<div class="card-grid two">
-  <a class="card" href="/roofing/">${photo('Re-roofing a slate roof', '3/2')}
+  <a class="card" href="/roofing/">${photo('slate-roof-cottage-drone', '3/2', '', { sizes: '(min-width: 700px) 50vw, 100vw' })}
     <div class="card-body"><h3>Roofing</h3><p>Re-roofs, roof repairs, ridges and chimneys in natural slate and tile. Leaks found and fixed properly.</p><span class="more">Roofing services</span></div></a>
-  <a class="card" href="/leadwork/">${photo('Hand-dressed lead flashing', '3/2')}
+  <a class="card" href="/leadwork/">${photo('lead-clad-dormers', '3/2', '', { sizes: '(min-width: 700px) 50vw, 100vw' })}
     <div class="card-body"><h3>Leadwork</h3><p>Flashings, chimney leadwork, valleys and traditional lead bay and porch roofs, cut and dressed by hand.</p><span class="more">Leadwork services</span></div></a>
 </div>`;
 
@@ -202,8 +205,8 @@ ${reviewsBlock('What our customers say', true, slots.home)}
     <p class="eyebrow">Recent work</p>
     <h2 id="work-h">Recent jobs</h2>
     <div class="work-grid">
-      ${['VELUX replacement, Newton Abbot', 'Slate re-roof, Totnes', 'Chimney leadwork, Brixham']
-        .map((t) => `<article class="work">${photo(t, '4/3')}<h3>${t}</h3><p class="todo-note">Job write-up to come.</p></article>`).join('')}
+      ${[['VELUX replacement, Newton Abbot', 'velux-four-pane-old-slate'], ['Slate re-roof, Totnes', 'slate-house-drone'], ['Chimney leadwork, Brixham', 'chimney-stack-lead']]
+        .map(([t, img]) => `<article class="work">${photo(img, '4/3', '', { sizes: '(min-width: 1100px) 260px, (min-width: 700px) 45vw, 100vw' })}<h3>${t}</h3><p class="todo-note">Job write-up to come.</p></article>`).join('')}
     </div>
   </div>
 </section>
@@ -221,7 +224,7 @@ ${reviewsBlock('What our customers say', true, slots.home)}
 
 <section class="section alt" aria-labelledby="about-h">
   <div class="wrap split">
-    ${photo('The Dixons family team', '4/3')}
+    ${photo('velux-cabrio-team', '4/3', '', { alt: 'One of The Dixons team in a newly fitted VELUX Cabrio balcony' })}
     <div>
       <p class="eyebrow">About us</p>
       <h2 id="about-h">A family business since ${site.since}</h2>
@@ -294,33 +297,33 @@ ${section('installation', 'New VELUX roof windows', [
   'A roof window lets in up to twice as much light as a vertical window of the same size, so it is the quickest way to make a loft room, landing or bathroom feel bigger and brighter.',
   'We help you choose the right type and size for the room, position it for the best light and views, then fit it with the correct VELUX flashing kit, insulation collar and vapour barrier so it is warm, dry and condensation-free.',
   'Options include centre-pivot and top-hung windows, electric and solar-powered windows for hard-to-reach spots, and balcony-style windows that open out to give you a little outdoor space.',
-], 'New VELUX window fitted in a loft room')}
+], 'velux-cabrio-sea-view')}
 
 ${section('replacement', 'VELUX window replacement', [
   'If your roof window is 20 years old or more, it is probably letting heat out and noise in. Misted glazing, perished seals, stiff handles and drips in heavy rain are all signs it is time for a replacement.',
   'Most older VELUX windows can be replaced like-for-like with a current model in the same opening, usually in a day and normally without disturbing the plaster inside. We can also replace other brands of roof window.',
   'New windows are better insulated and quieter in the rain, and we can fit blinds at the same time.',
-], 'Old roof window being replaced', true)}
+], 'velux-four-pane-old-slate', true)}
 
 ${section('blinds', 'VELUX blinds, shutters &amp; accessories', [
   'Blackout blinds make loft bedrooms usable on summer evenings, external awning blinds and shutters stop rooms overheating, and insect screens let you keep the window open at night.',
   'Solar-powered blinds need no wiring and can be retro-fitted to most existing VELUX windows. Send us a photo of the data plate on your window and we will tell you what fits.',
-], 'VELUX blackout blind in a bedroom')}
+], 'velux-cabrio-inside')}
 
 ${section('repairs', 'Roof window repairs &amp; flashings', [
   'Leaks around roof windows are usually caused by worn or badly fitted flashing, slipped tiles or slates, or failed leadwork, not the window itself.',
   'Because we are roofers and leadworkers as well as VELUX installers, we can find the real cause and fix the roof around the window, not just the window. We also handle broken hinges, failed seals and storm damage.',
-], 'Repairing the flashing around a roof window', true)}
+], 'velux-clay-tile-roof', true)}
 
 ${section('conservation', 'Conservation roof windows', [
   'For period homes and conservation areas, such as parts of Totnes, Ashburton and Newton Abbot, VELUX conservation windows sit low in the roof with a slim, traditional look.',
   'We can advise on what is likely to be acceptable and whether you need permission from your local council before any work starts.',
-], 'Conservation-style roof window on a slate roof')}
+], 'slater-velux-slate-roof')}
 
 ${section('loft-conversions', 'Loft conversions', [
   'Planning a loft conversion? We supply and fit the roof windows and do the leadwork, either for you directly or as part of your builder’s project.',
   'Getting the windows right early on makes a huge difference to how the finished room feels, so talk to us at the planning stage.',
-], 'Loft conversion with several roof windows', true)}
+], 'velux-reroof-three-windows', true)}
 
 ${reviewsBlock('Trusted by local VELUX customers', false, slots.velux)}
 
@@ -415,7 +418,7 @@ ${reviewsBlock(`What our ${crumb.toLowerCase()} customers say`, false, onTopic)}
       <p>${otherText}</p>
       <p><a class="btn btn-secondary" href="/velux-windows/">VELUX roof windows</a></p>
     </div>
-    ${veluxPick ? reviewCard(veluxPick) : photo('New VELUX window fitted by The Dixons', '4/3')}
+    ${veluxPick ? reviewCard(veluxPick) : photo('velux-pair-slating', '4/3')}
   </div>
 </section>
 
@@ -478,22 +481,22 @@ function roofing() {
         'When a roof is past repairing, with slates sliding, battens rotten or leaks appearing in several places, a re-roof is the long-term answer.',
         'We strip the old covering back to the rafters, check and replace any damaged timber, then fit a new breathable membrane, treated battens and your choice of natural slate or tile, with new ridges, flashings and leadwork to finish.',
         'Where we can, we reclaim sound slates to keep the character of an older roof, and we can match existing materials on terraces and conservation-area properties.',
-      ], 'Slate re-roof in progress'],
+      ], 'conical-roof-half-slated'],
       ['repairs', 'Roof repairs and leaks', [
         'Most leaks start small: a slipped slate, a cracked tile, a gap in the flashing. Left alone, water gets into the battens, rafters and ceilings below.',
         'We trace the leak back to its source, which is often some distance from the damp patch inside, and repair it with matching materials. We also handle storm damage, nail fatigue on older slate roofs and emergency make-safe work.',
-      ], 'Replacing slipped slates'],
+      ], 'slate-hooks-reroof'],
       ['ridges', 'Ridge and hip tiles', [
         'Ridge and hip tiles bedded in mortar crack and loosen over time, especially on exposed coastal roofs. Loose ridges let water in and can be dangerous in high winds.',
         'We can re-bed and repoint them in mortar, or fit a mechanically fixed dry ridge and dry hip system that needs far less maintenance.',
-      ], 'Re-bedding ridge tiles'],
+      ], 'ridge-tiles'],
       ['chimneys', 'Chimney repairs', [
         'Chimneys take the worst of the weather and are one of the most common sources of leaks. Crumbling pointing, cracked flaunching and failed flashings all let water in.',
         'We repoint stacks, renew flaunching, fit cowls and caps, and replace flashings with properly dressed lead. As leadworkers, we can do the whole job in one visit.',
-      ], 'Chimney stack repair'],
+      ], 'slate-roof-chimney'],
       ['inspections', 'Roof inspections', [
         'Buying a house, worried after a storm, or just not sure what state your roof is in? We will inspect it, take photos, and tell you plainly what needs doing now, what can wait and what is fine.',
-      ], 'Roof inspection'],
+      ], 'slate-house-drone'],
     ],
     faqTitle: 'Roofing FAQs',
     faqs: [
@@ -527,23 +530,23 @@ function leadwork() {
       ['flashings', 'Lead flashings', [
         'Wherever a roof meets a wall, a chimney, a dormer or an extension, there needs to be a flashing. Lead is still the best material for the job: it lasts, it can be shaped to fit almost anything, and it moves with the building.',
         'We fit step and cover flashings, aprons and soakers, chased into the brickwork and dressed neatly to the roof, using the right thickness of lead for each detail.',
-      ], 'Step flashing against a wall'],
+      ], 'lead-capping-stone-wall'],
       ['chimney-leadwork', 'Chimney leadwork', [
         'Leaks around chimneys are one of the most common calls we get. Usually the cause is old or badly fitted leadwork: a perished back gutter, a cracked apron, or flashings that have pulled away from the stack.',
         'We strip out the old lead and fit a complete new set, with the back gutter, side flashings and front apron all made to suit your stack.',
-      ], 'New lead around a chimney stack'],
+      ], 'chimney-stack-lead'],
       ['valleys', 'Lead valleys and gutters', [
         'Valleys carry a lot of water where two roof slopes meet, and parapet and box gutters do the same behind walls. When the lead splits or the joints fail, water goes straight into the building.',
         'We reline valleys and gutters in new lead, with correctly sized sheets and joints so the lead can expand and contract without cracking.',
-      ], 'Relined lead valley'],
+      ], 'lead-dressing-rolls'],
       ['bays', 'Bay, porch and dormer roofs', [
         'Bay windows, porches, canopies and dormers on older homes were often roofed in lead, and many are now due for replacement.',
         'We lay new lead roofs the traditional way, with wood-cored rolls, drips and welted edges, so they look right on a period property and last for decades.',
-      ], 'Lead roof on a bay window'],
+      ], 'lead-roof-rolls'],
       ['patination', 'Finishing and aftercare', [
         'New lead is treated with patination oil once fitted, which protects it, stops white staining running down walls and gives it an even finish while it weathers.',
         'If you have lost lead to theft, we can replace it in lead or advise on alternatives where security is a concern.',
-      ], 'Finished leadwork'],
+      ], 'lead-oak-porch'],
     ],
     faqTitle: 'Leadwork FAQs',
     faqs: [
@@ -565,6 +568,8 @@ function leadwork() {
 
 // ---------- Areas ----------
 function areaPage(a) {
+  // Photo rotation: best photos go to the towns the business wants to lead with.
+  const i = photoPriority.indexOf(a.slug);
   const path = `/areas/${a.slug}/`;
   const nearby = a.nearby.map((s) => areaBySlug[s]);
   const body = `
@@ -585,7 +590,7 @@ function areaPage(a) {
       ${a.local.map((p) => `<p>${p}</p>`).join('')}
       <p>${a.velux}</p>
     </div>
-    ${photo(`VELUX job in ${a.name}`, '4/3')}
+    ${photo(pick('velux', i), '4/3')}
   </div>
 </section>
 
@@ -603,7 +608,7 @@ function areaPage(a) {
         <h2>Roofing &amp; leadwork in ${esc(a.name)}</h2>
         ${a.roofing.map((p) => `<p>${p}</p>`).join('')}
       </div>
-      ${photo(`Roofing job in ${a.name}`, '4/3')}
+      ${photo(pick('roofing', i), '4/3')}
     </div>
     <h3 class="sub-h">Our roofing and leadwork services in ${esc(a.name)}</h3>
     ${cards([roofingServices[0], roofingServices[1], leadServices[0], roofingServices[3]].map((x) => ({ ...x, href: (leadServices.includes(x) ? '/leadwork/#' : '/roofing/#') + x.id })), '')}
@@ -614,7 +619,7 @@ function areaPage(a) {
   <div class="wrap">
     <h2>Recent work in ${esc(a.name)}</h2>
     <div class="work-grid">
-      ${['VELUX job', 'Roofing job', 'Leadwork job'].map((t) => `<article class="work">${photo(`${t} in ${a.name}`, '4/3')}<h3>${t} in ${esc(a.name)}</h3><p class="todo-note">Write-up to come.</p></article>`).join('')}
+      ${[['VELUX job', pick('velux', i + 5)], ['Roofing job', pick('roofing', i + 7)], ['Leadwork job', pick('leadwork', i)]].map(([t, img]) => `<article class="work">${photo(img, '4/3', '', { sizes: '(min-width: 1100px) 260px, (min-width: 700px) 45vw, 100vw' })}<h3>${t} in ${esc(a.name)}</h3><p class="todo-note">Write-up to come.</p></article>`).join('')}
     </div>
   </div>
 </section>

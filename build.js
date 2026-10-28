@@ -71,7 +71,7 @@ const scan = (obj, path) => {
 };
 scan(site, 'site.');
 if (!googleWriteReviewUrl) todos.push('Google "leave a review" link (src/reviews.js → googleWriteReviewUrl)');
-todos.push('Real job photos (every "Photo to come" block)', 'Job write-ups for Recent work');
+todos.push('Job write-ups for Recent work');
 
 console.log(`Built ${pages.length} pages → ${OUT}/${BASE ? ` (base ${BASE})` : ''}${PREVIEW ? ' [preview, noindex]' : ''}`);
 console.log(`\nPlaceholders still to fill (${todos.length}):\n- ` + todos.join('\n- '));
