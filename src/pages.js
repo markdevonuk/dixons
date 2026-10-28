@@ -205,8 +205,8 @@ ${reviewsBlock('What our customers say', true, slots.home)}
     <p class="eyebrow">Recent work</p>
     <h2 id="work-h">Recent jobs</h2>
     <div class="work-grid">
-      ${[['VELUX replacement, Newton Abbot', 'velux-four-pane-old-slate'], ['Slate re-roof, Totnes', 'slate-house-drone'], ['Chimney leadwork, Brixham', 'chimney-stack-lead']]
-        .map(([t, img]) => `<article class="work">${photo(img, '4/3', '', { sizes: '(min-width: 1100px) 260px, (min-width: 700px) 45vw, 100vw' })}<h3>${t}</h3><p class="todo-note">Job write-up to come.</p></article>`).join('')}
+      ${[['VELUX replacement, South Devon', 'velux-four-pane-old-slate'], ['Slate re-roof, South Devon', 'slate-house-drone'], ['Chimney leadwork, South Devon', 'chimney-stack-lead']]
+        .map(([t, img]) => `<article class="work">${photo(img, '4/3', '', { sizes: '(min-width: 1100px) 260px, (min-width: 700px) 45vw, 100vw' })}<h3>${t}</h3></article>`).join('')}
     </div>
   </div>
 </section>
