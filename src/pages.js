@@ -143,10 +143,10 @@ function home() {
       <p class="hero-note">${icon.whatsapp} Quickest way to a price? <a href="${waLink()}" rel="noopener">WhatsApp us a few photos</a>.</p>
     </div>
     <figure class="hero-photo">
-      <img src="/assets/img/photos/team-sunset-roof-1280.webp"
-        srcset="/assets/img/photos/team-sunset-roof-640.webp 640w, /assets/img/photos/team-sunset-roof-1280.webp 1280w"
+      <img src="/assets/img/photos/team-roof-window-1280.webp"
+        srcset="/assets/img/photos/team-roof-window-640.webp 640w, /assets/img/photos/team-roof-window-1280.webp 1280w"
         sizes="(min-width: 900px) 46vw, 100vw" width="1280" height="960" fetchpriority="high"
-        alt="Todd, Sam and Mark from The Dixons on a tiled roof around an open VELUX roof window at sunset">
+        alt="Todd, Sam and Mark from The Dixons on a tiled roof around an open VELUX roof window on a sunny day">
       <figcaption>Todd, Sam and Mark, the Dixons team</figcaption>
     </figure>
   </div>
