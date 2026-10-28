@@ -32,7 +32,7 @@ export const site = {
     { days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '08:00', closes: '16:30' },
   ], // Saturday and Sunday closed (confirmed Oct 2026)
 
-  since: 1980, // founding year (confirmed Oct 2026)
+  since: 1984, // founding year (corrected from 1980, Oct 2026)
 
   social: {
     facebook: null, // TODO

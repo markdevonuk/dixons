@@ -617,9 +617,9 @@ function areaPage(a) {
 
 <section class="section alt">
   <div class="wrap">
-    <h2>Recent work in ${esc(a.name)}</h2>
+    <h2>Recent work in ${esc(a.name)} and surrounding areas</h2>
     <div class="work-grid">
-      ${[['VELUX job', pick('velux', i + 5)], ['Roofing job', pick('roofing', i + 7)], ['Leadwork job', pick('leadwork', i)]].map(([t, img]) => `<article class="work">${photo(img, '4/3', '', { sizes: '(min-width: 1100px) 260px, (min-width: 700px) 45vw, 100vw' })}<h3>${t} in ${esc(a.name)}</h3><p class="todo-note">Write-up to come.</p></article>`).join('')}
+      ${[['VELUX job', pick('velux', i + 5)], ['Roofing job', pick('roofing', i + 7)], ['Leadwork job', pick('leadwork', i)]].map(([t, img]) => `<article class="work">${photo(img, '4/3', '', { sizes: '(min-width: 1100px) 260px, (min-width: 700px) 45vw, 100vw' })}<h3>${t} in the local area</h3></article>`).join('')}
     </div>
   </div>
 </section>
