@@ -1,6 +1,6 @@
 # The Dixons Roofing & Leadwork — website
 
-Static site for dixonsrl.com. No framework, no runtime dependencies: a small Node script builds plain HTML into `dist/`, which any static host can serve (GitHub Pages, Cloudflare Pages, Netlify).
+Static site for dixonsvelux.co.uk (replacing dixonsrl.com). No framework, no runtime dependencies: a small Node script builds plain HTML into `dist/`, which any static host can serve (GitHub Pages, Cloudflare Pages, Netlify).
 
 ## Commands
 
@@ -10,11 +10,17 @@ node check.js     # check links, anchors, JSON-LD, titles, descriptions
 npm run serve     # build and preview at http://localhost:4321
 ```
 
-## Preview on GitHub Pages
+## Hosting
 
-Every push to `main` deploys a preview to https://markdevonuk.github.io/dixons/ via `.github/workflows/preview.yml`.
-The preview is built with `BASE_PATH=/dixons PREVIEW=1`, which prefixes links with `/dixons` and adds `noindex` plus a blocking `robots.txt`, so Google never indexes it as a duplicate of the real site.
-One-off setup: repo **Settings → Pages → Source: GitHub Actions**.
+Every push to `main` builds the live site and deploys it to GitHub Pages at https://dixonsvelux.co.uk via `.github/workflows/preview.yml`.
+Settings: repo **Settings → Pages → Source: GitHub Actions**, custom domain `dixonsvelux.co.uk`, Enforce HTTPS on.
+DNS (Fasthosts): four A records on `@` to 185.199.108–111.153, and `www` CNAME to `markdevonuk.github.io`.
+
+The sitemap is at https://dixonsvelux.co.uk/sitemap.xml and is listed in `robots.txt`. Submit it in Google Search Console (Sitemaps) for the dixonsvelux.co.uk property.
+
+A noindex preview can still be built locally under a sub-path with `BASE_PATH=/dixons PREVIEW=1 node build.js`.
+
+GitHub Pages ignores `_redirects`. Once dixonsrl.com moves off WordPress, point it at this site with a 301 at its registrar or host so its rankings carry over.
 
 ## Where things live
 

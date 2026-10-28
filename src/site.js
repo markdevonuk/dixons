@@ -4,7 +4,7 @@
 export const TODO = (label) => ({ todo: true, label });
 
 export const site = {
-  url: 'https://dixonsrl.com',
+  url: 'https://dixonsvelux.co.uk', // live domain (Oct 2026); dixonsrl.com to 301 here later
   name: 'The Dixons Roofing & Leadwork',
   legalName: 'The Dixons Roofing & Leadwork Limited',
   shortName: 'The Dixons',
