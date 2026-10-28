@@ -127,6 +127,8 @@ export function page({ path, title, description, body, schema = [], ogImage = '/
   const current = (href) => (path === href ? ' aria-current="page"' : '');
   const year = new Date().getFullYear();
   const a = site.address;
+  // Brand first in every title, so Google results lead with "The Dixons"
+  title = title.startsWith(site.shortName) ? title : `${site.shortName} | ${title}`;
 
   return `<!doctype html>
 <html lang="en-GB">
@@ -139,7 +141,7 @@ export function page({ path, title, description, body, schema = [], ogImage = '/
 ${noindex ? '<meta name="robots" content="noindex">' : ''}
 <meta property="og:type" content="website">
 <meta property="og:locale" content="en_GB">
-<meta property="og:site_name" content="${esc(site.name)}">
+<meta property="og:site_name" content="${esc(site.shortName)}">
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:url" content="${abs(path)}">
@@ -148,9 +150,13 @@ ${noindex ? '<meta name="robots" content="noindex">' : ''}
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#1D1D1B">
-<link rel="icon" href="/assets/img/favicon.ico" sizes="any">
+<link rel="icon" href="/assets/img/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="icon" href="/assets/img/favicon-48.png" type="image/png" sizes="48x48">
+<link rel="icon" href="/assets/img/favicon-96.png" type="image/png" sizes="96x96">
+<link rel="icon" href="/assets/img/icon-192.png" type="image/png" sizes="192x192">
 <link rel="icon" href="/assets/img/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
 <link rel="preload" href="/assets/fonts/source-serif-4-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/barlow-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/style.css?v=${assetVersion}">

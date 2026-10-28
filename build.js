@@ -26,6 +26,20 @@ for (const [file, html] of pages) {
   writeFileSync(dest, rebase(html));
 }
 cpSync('assets', join(OUT, 'assets'), { recursive: true });
+// Root favicon and web manifest: browsers and Google look for these at the site root
+cpSync('assets/img/favicon.ico', join(OUT, 'favicon.ico'));
+writeFileSync(join(OUT, 'site.webmanifest'), JSON.stringify({
+  name: site.name,
+  short_name: site.shortName,
+  start_url: `${BASE}/`,
+  display: 'standalone',
+  background_color: '#1D1D1B',
+  theme_color: '#1D1D1B',
+  icons: [
+    { src: `${BASE}/assets/img/icon-192.png`, sizes: '192x192', type: 'image/png' },
+    { src: `${BASE}/assets/img/icon-512.png`, sizes: '512x512', type: 'image/png' },
+  ],
+}, null, 2));
 if (BASE) {
   const css = join(OUT, 'assets/css/style.css');
   writeFileSync(css, readFileSync(css, 'utf8').replaceAll('url(/assets/', `url(${BASE}/assets/`));

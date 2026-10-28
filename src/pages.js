@@ -246,11 +246,11 @@ ${ctaBand()}`;
 
   return page({
     path: '/',
-    title: 'VELUX, Roofing & Leadwork | Newton Abbot & South Devon | The Dixons',
+    title: 'VELUX, Roofing & Leadwork | Newton Abbot & Totnes',
     description: 'VELUX Certified Installers, roofers and leadworkers in Kingskerswell. Roof windows, re-roofs, repairs and leadwork from Newton Abbot to Totnes, Ashburton and Chudleigh.',
     body,
     schema: [
-      { '@type': 'WebSite', '@id': site.url + '/#website', url: site.url + '/', name: site.name, publisher: { '@id': businessId } },
+      { '@type': 'WebSite', '@id': site.url + '/#website', url: site.url + '/', name: site.shortName, alternateName: [site.name, 'Dixons Roofing and Leadwork'], publisher: { '@id': businessId } },
       faqSchema(faqs),
     ],
   });
@@ -360,7 +360,7 @@ ${ctaBand('Get a free VELUX quote')}`;
 
   return page({
     path: '/velux-windows/',
-    title: 'VELUX Window Installation & Replacement | Newton Abbot & Totnes',
+    title: 'VELUX Windows Fitted & Replaced | Newton Abbot',
     description: 'VELUX Certified Installers for Newton Abbot, Totnes, Ashburton, Chudleigh and Teignmouth. New and replacement roof windows, blinds and leak repairs. Free quotes.',
     body,
     schema: [
@@ -509,7 +509,7 @@ function roofing() {
     otherTitle: 'Roof windows done by roofers',
     otherText: 'We are VELUX Certified Installers, so if you are re-roofing it is the ideal time to add or replace roof windows. We fit them as part of the same job, with the flashings and leadwork done properly.',
     cta: 'Get a free roofing quote',
-    title: 'Roofers in Newton Abbot & Totnes | Re-roofs & Repairs',
+    title: 'Roofers in Newton Abbot & Totnes | Roof Repairs',
     description: 'Family-run roofers in Kingskerswell. Slate and tile re-roofs, roof repairs, ridges, chimneys and storm damage from Newton Abbot to Totnes, Ashburton and Chudleigh.',
     serviceName: 'Roofing services',
     serviceType: 'Roofing',
@@ -559,7 +559,7 @@ function leadwork() {
     otherTitle: 'Leadwork and roof windows',
     otherText: 'Lead and roof windows go hand in hand. As VELUX Certified Installers and leadworkers, we can fit a new roof window and finish all the lead detailing around it properly.',
     cta: 'Get a free leadwork quote',
-    title: 'Leadwork Specialists | Newton Abbot & South Devon | The Dixons',
+    title: 'Leadwork Specialists | Newton Abbot & South Devon',
     description: 'Lead flashings, chimney leadwork, valleys and traditional lead bay roofs, hand-dressed by a family firm in Kingskerswell. Covering Newton Abbot, Totnes, Ashburton and Chudleigh.',
     serviceName: 'Leadwork services',
     serviceType: 'Leadwork',
@@ -645,7 +645,7 @@ ${ctaBand(`Need a roofer or VELUX installer in ${esc(a.name)}?`)}`;
 
   return page({
     path,
-    title: `VELUX, Roofing & Leadwork in ${a.name} | The Dixons`,
+    title: `VELUX, Roofing & Leadwork in ${a.name}`,
     description: `VELUX Certified Installers, roofers and leadworkers ${a.home ? 'based in' : 'covering'} ${a.name}. Roof windows, re-roofs, roof repairs, chimneys and lead flashings. Free quotes.`,
     body,
     schema: [
@@ -679,7 +679,7 @@ function areasIndex() {
 ${ctaBand()}`;
   return page({
     path: '/areas/',
-    title: 'Areas We Cover | Roofers & VELUX Installers | The Dixons',
+    title: 'Areas We Cover | Roofers & VELUX Installers',
     description: 'VELUX Certified Installers, roofers and leadworkers covering Kingskerswell, Newton Abbot, Totnes, Ashburton, Bovey Tracey, Chudleigh, Teignmouth and Torbay.',
     body,
     schema: [breadcrumbs([['Home', '/'], ['Areas', '/areas/']])],
@@ -747,7 +747,7 @@ function contact() {
 </section>`;
   return page({
     path: '/contact/',
-    title: 'Contact & Free Quotes | The Dixons Roofing & Leadwork',
+    title: 'Contact Us & Free Quotes',
     description: 'Get a free VELUX, roofing or leadwork quote from The Dixons in Kingskerswell. Call, WhatsApp us photos or send an enquiry online.',
     body,
     schema: [breadcrumbs([['Home', '/'], ['Contact', '/contact/']]), { '@type': 'ContactPage', url: site.url + '/contact/', about: { '@id': businessId } }],
@@ -768,13 +768,13 @@ function privacy() {
 <p><strong>Cookies.</strong> This website does not use advertising or tracking cookies.</p>
 <p><strong>Your rights.</strong> You can ask to see, correct or delete the information we hold about you by contacting us at <a href="mailto:${site.email.address}">${esc(site.email.address)}</a>. You also have the right to complain to the Information Commissioner’s Office (ico.org.uk).</p>
 </div></section>`;
-  return page({ path: '/privacy/', title: 'Privacy Policy | The Dixons Roofing & Leadwork', description: 'How The Dixons Roofing & Leadwork uses personal information collected through this website.', body });
+  return page({ path: '/privacy/', title: 'Privacy Policy', description: 'How The Dixons Roofing & Leadwork uses personal information collected through this website.', body });
 }
 
 function notFound() {
   const body = `<section class="page-hero"><div class="wrap"><h1>Sorry, we can’t find that page</h1><p class="lede">It may have moved when we rebuilt the website.</p>
   <div class="btn-row"><a class="btn btn-primary" href="/">Go to the homepage</a><a class="btn btn-secondary" href="/velux-windows/">VELUX windows</a></div></div></section>`;
-  return page({ path: '/404.html', title: 'Page not found | The Dixons', description: 'Page not found.', body, noindex: true });
+  return page({ path: '/404.html', title: 'Page Not Found', description: 'Page not found.', body, noindex: true });
 }
 
 export function allPages() {
