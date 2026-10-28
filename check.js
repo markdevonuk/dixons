@@ -20,6 +20,7 @@ const err = (m) => { errors++; console.log('✗', m); };
 const titles = new Map();
 
 for (const [f, src] of Object.entries(html)) {
+  if (src.includes('http-equiv="refresh"')) continue; // old-URL forwarding stubs
   const title = src.match(/<title>(.*?)<\/title>/)?.[1]?.replace(/&amp;/g, "&");
   const desc = src.match(/name="description" content="(.*?)"/)?.[1] || '';
   if (!title) err(`${f}: no title`);

@@ -64,16 +64,33 @@ writeFileSync(join(OUT, 'robots.txt'), PREVIEW
 // Old WordPress URLs → new pages (Netlify / Cloudflare Pages format). Keeps existing rankings.
 // Old URLs that only differ by a trailing slash (/velux-windows, /leadwork, /contact) are left to the host,
 // which adds the slash itself; listing them here can cause redirect loops on some hosts.
-writeFileSync(join(OUT, '_redirects'), `/tips-for-choosing-velux-windows /velux-windows/              301
-/balcony-windows                 /velux-windows/#installation 301
-/pitched-roofing                 /roofing/                    301
-/services                        /                            301
-/roofing-about                   /                            301
-/projects                        /                            301
-/interior-decoration             /                            301
-/dixonsrl.com/contact            /contact/                    301
-/portfolio/kingsteignton         /areas/kingsteignton/        301
+const oldUrls = [
+  ['/tips-for-choosing-velux-windows', '/velux-windows/'],
+  ['/balcony-windows', '/velux-windows/#installation'],
+  ['/pitched-roofing', '/roofing/'],
+  ['/services', '/'],
+  ['/roofing-about', '/'],
+  ['/projects', '/'],
+  ['/interior-decoration', '/'],
+  ['/dixonsrl.com/contact', '/contact/'],
+  ['/portfolio/kingsteignton', '/areas/kingsteignton/'],
+];
+writeFileSync(join(OUT, '_redirects'), oldUrls.map(([from, to]) => `${from.padEnd(32)} ${to.padEnd(28)} 301`).join('\n') + '\n');
+
+// GitHub Pages ignores _redirects, so each old URL also gets a tiny page that forwards straight away.
+// Google treats an instant meta refresh as a permanent redirect; the canonical points at the new page too.
+for (const [from, to] of oldUrls) {
+  const dest = join(OUT, from, 'index.html');
+  mkdirSync(dirname(dest), { recursive: true });
+  writeFileSync(dest, `<!doctype html>
+<html lang="en-GB"><head><meta charset="utf-8">
+<title>Moved</title>
+<meta http-equiv="refresh" content="0; url=${BASE}${to}">
+<link rel="canonical" href="${site.url}${to.split('#')[0]}">
+<script>location.replace(${JSON.stringify(BASE + to)})</script>
+</head><body><p>This page has moved to <a href="${BASE}${to}">${site.url}${to}</a>.</p></body></html>
 `);
+}
 
 // Placeholder report
 const todos = [];

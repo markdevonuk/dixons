@@ -20,7 +20,7 @@ The sitemap is at https://dixonsvelux.co.uk/sitemap.xml and is listed in `robots
 
 A noindex preview can still be built locally under a sub-path with `BASE_PATH=/dixons PREVIEW=1 node build.js`.
 
-GitHub Pages ignores `_redirects`. Once dixonsrl.com moves off WordPress, point it at this site with a 301 at its registrar or host so its rankings carry over.
+GitHub Pages ignores `_redirects`, so the build also writes a small forwarding page at each old WordPress URL (list in `build.js`, `oldUrls`). Point dixonsrl.com at this site with a path-preserving 301 at its registrar or DNS host (dixonsrl.com/pitched-roofing → dixonsvelux.co.uk/pitched-roofing), and those pages send visitors on to the right new page.
 
 ## Where things live
 
