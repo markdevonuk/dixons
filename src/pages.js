@@ -143,11 +143,11 @@ function home() {
       <p class="hero-note">${icon.whatsapp} Quickest way to a price? <a href="${waLink()}" rel="noopener">WhatsApp us a few photos</a>.</p>
     </div>
     <figure class="hero-photo">
-      <img src="/assets/img/photos/team-velux-roof-960.webp"
-        srcset="/assets/img/photos/team-velux-roof-640.webp 640w, /assets/img/photos/team-velux-roof-960.webp 960w"
-        sizes="(min-width: 900px) 46vw, 100vw" width="960" height="720" fetchpriority="high"
-        alt="Mark and Sam Dixon on a slate roof beside a newly fitted VELUX roof window">
-      <figcaption>Mark and Sam Dixon fitting a VELUX roof window</figcaption>
+      <img src="/assets/img/photos/team-sunset-roof-1248.webp"
+        srcset="/assets/img/photos/team-sunset-roof-640.webp 640w, /assets/img/photos/team-sunset-roof-1248.webp 1248w"
+        sizes="(min-width: 900px) 46vw, 100vw" width="1248" height="936" fetchpriority="high"
+        alt="Todd, Sam and Mark from The Dixons on a tiled roof around an open VELUX roof window at sunset">
+      <figcaption>Todd, Sam and Mark, the Dixons team</figcaption>
     </figure>
   </div>
 </section>
