@@ -64,3 +64,34 @@ if (form) {
     }
   });
 }
+
+// Photo lightbox: click (or Enter/Space) on a job photo opens the largest size full screen.
+// Photos inside links (service cards) keep acting as links.
+const zoomable = [...document.querySelectorAll('.photo img, .hero-photo img')].filter((img) => !img.closest('a'));
+if (zoomable.length && 'HTMLDialogElement' in window) {
+  const box = document.createElement('dialog');
+  box.className = 'lightbox';
+  box.innerHTML = '<button class="lightbox-close" type="button" aria-label="Close photo">×</button><img alt=""><p class="lightbox-cap"></p>';
+  document.body.append(box);
+  const big = box.querySelector('img');
+  const cap = box.querySelector('.lightbox-cap');
+  const largest = (img) => (img.getAttribute('srcset') || '').split(',').map((s) => s.trim().split(/\s+/)[0]).filter(Boolean).at(-1) || img.currentSrc || img.src;
+  const open = (img) => {
+    big.src = img.currentSrc || img.src; // show the loaded size straight away, then swap in the big one
+    big.src = largest(img);
+    big.alt = img.alt;
+    cap.textContent = img.alt;
+    box.showModal();
+  };
+  zoomable.forEach((img) => {
+    img.classList.add('zoomable');
+    img.tabIndex = 0;
+    img.setAttribute('role', 'button');
+    img.setAttribute('aria-label', `Enlarge photo: ${img.alt}`);
+    img.addEventListener('click', () => open(img));
+    img.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(img); } });
+  });
+  // Any click closes it: the photo, the backdrop or the × button. Esc is handled by <dialog>.
+  box.addEventListener('click', () => box.close());
+  box.addEventListener('close', () => { big.removeAttribute('src'); });
+}
