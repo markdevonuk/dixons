@@ -178,7 +178,7 @@ ${noindex ? '<meta name="robots" content="noindex">' : ''}
     <a class="header-call" href="tel:${site.phone.tel}">${icon.phone}<span>${esc(site.phone.display)}</span></a>
   </div>
   <div class="trust-strip"><div class="wrap">
-    <a class="trust-rating" href="${googleReviewsUrl}" target="_blank" rel="noopener nofollow"><span class="stars" aria-hidden="true">★★★★★</span> ${reviewSummary.average.toFixed(1)} from ${reviewSummary.count} Google reviews</a>
+    <div class="trust-reviews"><a class="trust-rating" href="${googleReviewsUrl}" target="_blank" rel="noopener nofollow"><span class="stars" aria-hidden="true">★★★★★</span> ${reviewSummary.average.toFixed(1)} from ${reviewSummary.count} Google reviews</a><span class="trust-sep" aria-hidden="true">·</span><a class="trust-leave" href="${leaveReviewUrl}" target="_blank" rel="noopener nofollow">Leave your own review</a></div>
     <span>${icon.check} VELUX Certified Installer</span>
     <span>${icon.check} TrustMark registered for VELUX</span>
     <span>${icon.check} Roofing &amp; leadwork specialists</span>
