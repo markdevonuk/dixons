@@ -74,6 +74,8 @@ const oldUrls = [
   ['/interior-decoration', '/'],
   ['/dixonsrl.com/contact', '/contact/'],
   ['/portfolio/kingsteignton', '/areas/kingsteignton/'],
+  // IONOS sends the bare dixonsrl.com to its placeholder path /defaultsite, and the redirect keeps that path
+  ['/defaultsite', '/'],
 ];
 writeFileSync(join(OUT, '_redirects'), oldUrls.map(([from, to]) => `${from.padEnd(32)} ${to.padEnd(28)} 301`).join('\n') + '\n');
 
